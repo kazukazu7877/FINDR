@@ -161,8 +161,8 @@ DB_PATH = BASE_DIR / "findr.db"
 # ---------------------------------------------------------------------------
 # Gemini Models
 # ---------------------------------------------------------------------------
-GENERATION_MODEL = "gemini-3.8-flash"
-EMBEDDING_MODEL = "gemini-embedding-2"
+GENERATION_MODEL = get_secret("GENERATION_MODEL", "gemini-3.5-flash")
+EMBEDDING_MODEL = get_secret("EMBEDDING_MODEL", "gemini-embedding-2")
 EMBEDDING_DIMENSIONS = 768  # reduced from 3072 for storage efficiency
 
 # ---------------------------------------------------------------------------
