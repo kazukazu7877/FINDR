@@ -1,98 +1,153 @@
-# FINDR — AI-Powered Campus Lost & Found Platform
+# 🔍 FINDR — AI-Powered Campus Lost & Found Platform
 
-FINDR is a lost-and-found matching platform built with Python, Streamlit, and Google's official `google-genai` SDK. It pairs **Gemini 3.8 Flash** for structured visual feature extraction with **Gemini Embedding 2** for unified multimodal semantic matching.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python Version" />
+  <img src="https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit" />
+  <img src="https://img.shields.io/badge/Google%20Gemini-Multimodal%20AI-8E75C4?style=for-the-badge&logo=google&logoColor=white" alt="Gemini" />
+  <img src="https://img.shields.io/badge/Supabase-PostgreSQL%20%26%20Storage-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
+</p>
 
-Designed for exhibition at the campus AI Summit, FINDR runs in local development mode using SQLite and local storage, and seamlessly scales to **Streamlit Community Cloud** with **Supabase Free** (PostgreSQL & private image storage) in production.
-
----
-
-## Architecture & Core Tech
-
-- **Interface:** Streamlit (dark-purple layout with violet accents, mobile-responsive)
-- **Visual Understanding:** `gemini-3.8-flash` (structured JSON extraction: category, colors, materials, brands, distinctive features, condition)
-- **Multimodal Embeddings:** `gemini-embedding-2` (768-dimensional joint image + text vector space stored as `BYTEA`/`BLOB`)
-- **Database Layer:** Dual-engine adapter supporting **Supabase PostgreSQL** (production) and **SQLite** with WAL mode (local development)
-- **Storage Layer:** **Private Supabase Storage** (`findr-images`) storing object paths in PostgreSQL and generating short-lived signed URLs on-demand for display (with local disk fallback for offline use)
-- **Matching Pipeline:**
-  - Opposite-type filter (`lost` ↔ `found`)
-  - Strict category filter
-  - **65%** Multimodal embedding cosine similarity
-  - **25%** Structured visual attribute overlap
-  - **10%** Location context token similarity
-  - Dynamic weight renormalization
-- **Human Verification & Integrity:**
-  - Human verification step (Confirm / Dismiss / Not Sure)
-  - Atomic multi-table database transactions with row-level locks (`SELECT ... FOR UPDATE`)
-  - Database-level unique constraints preventing duplicate candidate pairs and double-confirmations
-- **Exhibition Access Control:**
-  - Public demo mode allows visitors to freely explore reports, execute searches, and inspect AI similarity scores
-  - Report submissions, match confirmations, and unredacted contact details are protected behind an **Exhibition Passcode** (`EXHIBITION_ACCESS_CODE`)
+<p align="center">
+  <b>An intelligent, multimodal lost-and-found system fusing Computer Vision, Semantic Embeddings, and Human Verification.</b>
+</p>
 
 ---
 
-## Quick Setup (Windows PowerShell)
+## 🌟 Overview
 
-### 1. Create and Activate Virtual Environment
+**FINDR** bridges the gap between misplaced possessions and their rightful owners across campus communities. By pairing **Gemini 3.8 Flash** for structured visual feature extraction with **Gemini Embedding 2** for 768-dimensional joint multimodal semantics, FINDR automates lost-to-found discovery with precision and reliability.
 
-```powershell
+Designed with an elegant dark violet glassmorphic aesthetic, FINDR delivers enterprise-grade integrity, sub-second matching, and safe public exhibition controls.
+
+---
+
+## ⚡ Key Highlights
+
+- 👁️ **Multimodal Visual Intelligence**: Zero-shot structured attribute extraction (colors, materials, brand emblems, unique damage/scratches, condition) using Google Gemini.
+- 📐 **Hybrid Matching Engine**: 
+  - **65%** Multimodal joint vector cosine similarity (`gemini-embedding-2`)
+  - **25%** Structured visual metadata overlap (brand, materials, features)
+  - **10%** Location and spatial context matching
+  - *Dynamic weight renormalization* when images or metadata are partially provided.
+- 🔒 **Enterprise Data Integrity**: Atomic cross-table transactions, row-level locks, and strict database constraints preventing double-claims and duplicate candidate records.
+- 🛡️ **Dual-Engine Architecture**: Operates locally with zero cloud dependencies using SQLite (WAL mode), or scales seamlessly to **Supabase PostgreSQL** and **Private Bucket Storage** with signed time-limited URLs.
+- 🎓 **Exhibition & Privacy Protection**: Public visitor mode allows live browsing and AI exploration, while reporting and private contact handoffs remain secured behind verified passcodes.
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+flowchart TD
+    subgraph Client ["Client Interface (Streamlit)"]
+        UI["Modern Glassmorphic UI\n(Dark / Violet Theme)"]
+        Forms["Report Submission & Verification\n(Passcode Protected)"]
+    end
+
+    subgraph AI ["AI Processing Pipeline"]
+        G_Flash["Gemini Vision / Flash\nStructured Feature Extraction"]
+        G_Embed["Gemini Embedding 2\n768-dim Multimodal Vectors"]
+    end
+
+    subgraph Matcher ["Matching Engine"]
+        Filter["Strict Category & Type Filter\n(Lost ↔ Found)"]
+        Cosine["Vector Cosine Similarity (65%)"]
+        Overlap["Attribute Overlap (25%)"]
+        LocSim["Location Context (10%)"]
+        Score["Composite Match Score & Ranking"]
+    end
+
+    subgraph Data ["Storage & Database"]
+        DB[("PostgreSQL / SQLite\nAtomic Transactions & Constraints")]
+        Storage[("Supabase Private Bucket\n/ Local Disk")]
+    end
+
+    UI --> Forms
+    Forms --> G_Flash
+    Forms --> G_Embed
+    G_Flash --> Matcher
+    G_Embed --> Matcher
+    Matcher --> Filter --> Cosine & Overlap & LocSim --> Score
+    Score --> DB
+    Forms --> Storage
+```
+
+---
+
+## 📂 Project Structure
+
+```text
+FINDR/
+├── app.py                # Main interactive Streamlit application & routing
+├── ai_engine.py          # Google Gemini multimodal vision & embedding extraction
+├── matcher.py            # Cosine similarity calculation & composite ranking pipeline
+├── database.py           # Unified database adapter (Supabase PostgreSQL + SQLite)
+├── storage.py            # Media storage engine (Private Supabase Storage + Local disk)
+├── ui_components.py      # Glassmorphic UI components, cards, banners, and badges
+├── config.py             # Centralized environment & secret configuration
+├── requirements.txt      # Production runtime dependencies
+└── .streamlit/
+    └── config.toml       # Streamlit theme custom styling and server parameters
+```
+
+---
+
+## 🚀 Quickstart
+
+### 1. Clone & Setup Environment
+
+```bash
+git clone https://github.com/kazukazu7877/FINDR.git
+cd FINDR
+
+# Create virtual environment
 python -m venv .venv
 
-# If script execution is restricted on your system, enable it for this session:
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-
+# Activate virtual environment (Windows PowerShell)
 .\.venv\Scripts\Activate.ps1
+# Or on Linux / macOS:
+# source .venv/bin/activate
 ```
 
 ### 2. Install Dependencies
 
-```powershell
-python -m pip install --upgrade pip
+```bash
+pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment
+### 3. Configure API Credentials
 
-Copy the configuration template:
+Set the following environment variables (or add them to Streamlit Cloud Secrets):
 
-```powershell
-Copy-Item .env.example .env
-```
+| Variable | Description | Default / Required |
+|---|---|---|
+| `GEMINI_API_KEY` | Google AI Studio API key | **Required** |
+| `EXHIBITION_ACCESS_CODE` | Passcode protecting report submissions & claims | Optional (default: `findr-dev-code`) |
+| `DATABASE_URL` | Supabase PostgreSQL Connection String | Optional (falls back to local SQLite) |
+| `SUPABASE_URL` | Supabase project endpoint | Optional (falls back to local storage) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service key for private storage | Optional |
 
-Set your configuration in `.env`:
-- `GEMINI_API_KEY`: Obtain from [Google AI Studio](https://aistudio.google.com/apikey).
-- `EXHIBITION_ACCESS_CODE`: Passcode protecting report submissions and match confirmations. In development, defaults to `findr-dev-code` if unspecified; in production, must be explicitly configured with a strong secret.
-- `DATABASE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`: (Optional in dev, required in production).
+### 4. Launch the App
 
-### 4. Run the Application
-
-```powershell
+```bash
 streamlit run app.py
 ```
 
-Open a browser to `http://localhost:8501`.
+Visit `http://localhost:8501` to view the application.
 
 ---
 
-## Test Suites
+## 🎯 Verification & Safety Flow
 
-| Test Suite | File | Description |
-|---|---|---|
-| **Supabase Adapter Suite** | `test_supabase_adapter.py` | Validates secret management, storage fallback, query translation, and atomic constraint logic offline. |
-| **Live Cloud Integration** | `test_supabase_live.py` | Direct end-to-end integration test against a live Supabase project (PostgreSQL, private bucket upload, signed URL HTTP download, 768-dim BYTEA exact match, atomic locks, and cleanup). |
-| **Matching Engine Suite** | `test_matcher.py` | 12/12 unit tests verifying cosine similarity, dynamic weight renormalization, and ranking. |
-| **End-to-End Acceptance** | `test_e2e.py` | 9/9 step test covering the full cycle: submit → match → verify → atomic transaction → restart persistence. |
-| **Milestone 1 Test** | `test_milestone1.py` | Database schema, CRUD, and connection baseline. |
-
-To run the complete test suite:
-```powershell
-python test_supabase_adapter.py
-python test_matcher.py
-python test_e2e.py
-```
+1. **Lost / Found Item Reported**: Image is ingested and processed concurrently for semantic embeddings and detailed JSON descriptors.
+2. **Instant Match Suggestions**: Matches above threshold are queued for both parties with transparent sub-score breakdowns.
+3. **Double-Blind Verification**: Claimants confirm specific matching features (e.g. inner initials, serial number, subtle marks).
+4. **Resolution Lock**: Upon mutual confirmation, the status transitions to `resolved` within an atomic transaction.
 
 ---
 
-## Deployment
+## 📄 License
 
-Complete step-by-step instructions for deploying to **Streamlit Community Cloud** and configuring **Supabase Free** are documented in:
-👉 **[DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md)**
+Distributed under the MIT License. See `LICENSE` for details.
