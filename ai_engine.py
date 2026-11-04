@@ -41,21 +41,35 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 _client: genai.Client | None = None
+_client_key: str | None = None
+
+
+def reset_client(api_key: str | None = None) -> None:
+    """Reset the cached Gemini client instance."""
+    global _client, _client_key
+    _client = None
+    _client_key = None
+    if api_key:
+        import os
+        os.environ["GEMINI_API_KEY"] = api_key.strip()
 
 
 def _get_client() -> genai.Client:
     """Lazily initialise and return the Gemini client with SDK-level bounded retries."""
-    global _client
-    if _client is None:
-        if not validate_api_key():
-            raise RuntimeError(
-                "GEMINI_API_KEY is not set. "
-                "Create a .env file with your key from https://aistudio.google.com/apikey"
-            )
+    global _client, _client_key
+    import config
+    current_key = config.get_gemini_api_key()
+    if not current_key:
+        raise RuntimeError(
+            "GEMINI_API_KEY is not set. "
+            "Please provide an API key in the sidebar or configure secrets / .env."
+        )
+    if _client is None or _client_key != current_key:
         _client = genai.Client(
-            api_key=GEMINI_API_KEY,
+            api_key=current_key,
             http_options=get_http_options(),
         )
+        _client_key = current_key
     return _client
 
 
