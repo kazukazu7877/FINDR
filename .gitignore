@@ -1,0 +1,28 @@
+# Environment & Secrets
+.env
+.env.local
+.streamlit/secrets.toml
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+
+# Uploads
+uploads/
+
+# Backups
+*.bak
+*backup*
+
+# IDE & Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
