@@ -33,8 +33,11 @@ const CATEGORIES = [
 export default function FindrApp() {
   const [currentPage, setCurrentPage] = useState<NavPage>("📊 Dashboard");
   const [isStaff, setIsStaff] = useState<boolean>(false);
-  const [staffPasscode, setStaffPasscode] = useState("");
+  const [staffUser, setStaffUser] = useState<{ id: number; email: string; name: string; role: string } | null>(null);
+  const [staffEmail, setStaffEmail] = useState("");
+  const [staffPassword, setStaffPassword] = useState("");
   const [staffError, setStaffError] = useState("");
+  const [staffSubmitting, setStaffSubmitting] = useState(false);
   const [showStaffExpander, setShowStaffExpander] = useState(false);
 
   // Data State
@@ -196,7 +199,7 @@ export default function FindrApp() {
         body: JSON.stringify({
           matchId,
           action,
-          reviewerName: isStaff ? "Exhibition Staff" : "User Verification",
+          reviewerName: staffUser ? `${staffUser.name} (${staffUser.role})` : "Staff Supervisor",
         }),
       });
       if (res.ok) {
@@ -207,15 +210,30 @@ export default function FindrApp() {
     }
   };
 
-  const handleAuthorizeStaff = (e: React.FormEvent) => {
+  const handleStaffLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (staffPasscode === "4mtk_3UbP#Sx9qW" || staffPasscode === "admin" || staffPasscode.length >= 4) {
-      setIsStaff(true);
-      setStaffError("");
-      setShowStaffExpander(false);
-      setStaffPasscode("");
-    } else {
-      setStaffError("Invalid staff passcode.");
+    setStaffSubmitting(true);
+    setStaffError("");
+    try {
+      const res = await fetch("/api/auth/staff", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: staffEmail, password: staffPassword }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setStaffError(data.error || "Staff authorization failed.");
+      } else {
+        setIsStaff(true);
+        setStaffUser(data.user);
+        setShowStaffExpander(false);
+        setStaffEmail("");
+        setStaffPassword("");
+      }
+    } catch (err: any) {
+      setStaffError("Network error. Please try again.");
+    } finally {
+      setStaffSubmitting(false);
     }
   };
 
@@ -276,51 +294,67 @@ export default function FindrApp() {
 
         <div className="findr-divider" />
 
-        {/* Exhibition / Role Access Control */}
+        {/* Application Mode & Role Authorization */}
         <div>
           <div className="text-xs font-semibold text-[#b8aed4] mb-2 tracking-wide uppercase">
-            Exhibition Access
+            Application Mode
           </div>
-          {isStaff ? (
+          {isStaff && staffUser ? (
             <div>
-              <div className="text-xs text-[#34d399] font-semibold mb-2 flex items-center gap-1.5">
+              <div className="text-xs text-[#34d399] font-semibold mb-1 flex items-center gap-1.5">
                 <span>●</span> Staff Mode Active
               </div>
+              <div className="text-[11px] text-[#b8aed4] mb-2 truncate">
+                {staffUser.name} <span className="text-[#a78bfa] capitalize">({staffUser.role})</span>
+              </div>
               <button
-                onClick={() => setIsStaff(false)}
+                onClick={() => {
+                  setIsStaff(false);
+                  setStaffUser(null);
+                }}
                 className="w-full text-xs font-medium py-1.5 px-3 rounded bg-[#1e1640] border border-[#2d2254] text-[#b8aed4] hover:text-white hover:border-[#8b5cf6] transition"
               >
-                🔒 Lock Staff Mode
+                Switch to User Mode
               </button>
             </div>
           ) : (
             <div>
               <div className="text-xs text-[#a78bfa] font-semibold mb-2 flex items-center gap-1.5">
-                <span>○</span> Visitor / Student Mode
+                <span>●</span> User Mode
               </div>
               <button
                 onClick={() => setShowStaffExpander(!showStaffExpander)}
                 className="w-full text-left text-xs font-medium text-[#b8aed4] hover:text-white flex items-center justify-between py-1 px-1 rounded transition"
               >
-                <span>🔑 Staff Access</span>
+                <span>Staff Authorization</span>
                 <span>{showStaffExpander ? "▲" : "▼"}</span>
               </button>
 
               {showStaffExpander && (
-                <form onSubmit={handleAuthorizeStaff} className="mt-2 space-y-2">
+                <form onSubmit={handleStaffLogin} className="mt-2 space-y-2">
+                  <input
+                    type="email"
+                    required
+                    placeholder="Staff email"
+                    value={staffEmail}
+                    onChange={(e) => setStaffEmail(e.target.value)}
+                    className="w-full text-xs bg-[#120e24] border border-[#2d2254] rounded p-1.5 text-white placeholder-[#7b6f9e] focus:outline-none focus:border-[#8b5cf6]"
+                  />
                   <input
                     type="password"
-                    placeholder="Enter staff passcode"
-                    value={staffPasscode}
-                    onChange={(e) => setStaffPasscode(e.target.value)}
+                    required
+                    placeholder="Password"
+                    value={staffPassword}
+                    onChange={(e) => setStaffPassword(e.target.value)}
                     className="w-full text-xs bg-[#120e24] border border-[#2d2254] rounded p-1.5 text-white placeholder-[#7b6f9e] focus:outline-none focus:border-[#8b5cf6]"
                   />
                   {staffError && <p className="text-[11px] text-[#f87171]">{staffError}</p>}
                   <button
                     type="submit"
-                    className="w-full text-xs py-1.5 rounded bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-medium shadow hover:brightness-110 transition"
+                    disabled={staffSubmitting}
+                    className="w-full text-xs py-1.5 rounded bg-gradient-to-r from-[#7c3aed] to-[#6366f1] text-white font-medium shadow hover:brightness-110 transition disabled:opacity-50"
                   >
-                    Authorize
+                    {staffSubmitting ? "Verifying..." : "Authorize Staff"}
                   </button>
                 </form>
               )}
@@ -1294,7 +1328,7 @@ export default function FindrApp() {
                             </span>
                           ) : (
                             <span className="text-[#7b6f9e]">
-                              🔒 Contact details protected — Staff Access Code required
+                              🔒 Contact details protected — Staff authorization required
                             </span>
                           )}
                         </div>
