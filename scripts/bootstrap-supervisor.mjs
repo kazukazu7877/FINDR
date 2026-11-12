@@ -1,11 +1,28 @@
 import { createClient } from "@supabase/supabase-js";
-import dotenv from "dotenv";
+import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
-dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
+
+// Load .env without external dependencies
+for (const envFile of ["../.env", "../.env.local", ".env"]) {
+  const fullPath = path.resolve(__dirname, envFile);
+  if (fs.existsSync(fullPath)) {
+    const content = fs.readFileSync(fullPath, "utf-8");
+    for (const line of content.split("\n")) {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith("#")) {
+        const idx = trimmed.indexOf("=");
+        if (idx > 0) {
+          const key = trimmed.slice(0, idx).trim();
+          const val = trimmed.slice(idx + 1).trim().replace(/^["']|["']$/g, "");
+          if (!process.env[key]) process.env[key] = val;
+        }
+      }
+    }
+  }
+}
 
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -42,10 +59,17 @@ async function bootstrapSupervisor() {
 
   if (createError) {
     if (createError.message.includes("already registered") || createError.message.includes("exists")) {
-      console.log("User already exists in Supabase Auth, fetching ID...");
+      console.log("User already exists in Supabase Auth, updating password...");
       const { data: listData } = await supabase.auth.admin.listUsers();
       const existing = listData?.users?.find((u) => u.email?.toLowerCase() === email.toLowerCase());
-      if (existing) authUserId = existing.id;
+      if (existing) {
+        authUserId = existing.id;
+        await supabase.auth.admin.updateUserById(authUserId, {
+          password,
+          user_metadata: { full_name: fullName, role: "supervisor" },
+        });
+        console.log("Password updated in Supabase Auth.");
+      }
     } else {
       console.error("Supabase Auth error:", createError.message);
       process.exit(1);
