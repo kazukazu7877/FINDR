@@ -39,7 +39,6 @@ import { ReportStatusTracker } from "@/components/status/ReportStatusTracker";
 import { AuthModal } from "@/components/modals/AuthModal";
 import { ClaimModal } from "@/components/modals/ClaimModal";
 import { ProfileModal } from "@/components/modals/ProfileModal";
-import { LocationCombobox } from "@/components/ui/LocationCombobox";
 import { Report, Match, Claim, Notification, UserProfile } from "@/types/database";
 
 const CATEGORIES = [
@@ -707,12 +706,13 @@ export default function FindrApp() {
                           <label className="block text-xs font-semibold text-zinc-300 mb-1">
                             Campus Location <span className="text-violet-400">*</span>
                           </label>
-                          <LocationCombobox
-                            value={location}
-                            onChange={(val) => setLocation(val)}
-                            suggestions={CAMPUS_LOCATIONS.filter((l) => l !== "All Campus")}
-                            placeholder="Select or type a campus location"
+                          <input
+                            type="text"
                             required
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="Enter the location where you lost/found the item"
+                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
                           />
                         </div>
                       </div>
