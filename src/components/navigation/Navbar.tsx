@@ -16,6 +16,9 @@ import {
   Menu,
   X,
   ArrowRight,
+  LayoutDashboard,
+  FileText,
+  UserCheck,
 } from "lucide-react";
 import { UserProfile, Notification } from "@/types/database";
 
@@ -121,7 +124,8 @@ export function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#2d244a] bg-[#0d0a1a]/90 backdrop-blur-md">
+    <>
+      <header className="sticky top-0 z-50 w-full border-b border-[#2d244a] bg-[#0d0a1a]/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <div className="flex items-center gap-6">
@@ -327,43 +331,50 @@ export function Navbar({
 
                 {/* Notifications Dropdown Drawer */}
                 {notifOpen && (
-                  <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-sm rounded-2xl border border-violet-500/30 bg-[#17122b] p-4 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
-                    <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-3">
-                      <div className="flex items-center gap-2">
-                        <Bell className="h-4 w-4 text-violet-400" />
-                        <h4 className="text-sm font-semibold text-white">Notifications</h4>
+                  <>
+                    <div
+                      className="fixed inset-0 z-40 bg-black/60 md:hidden"
+                      onClick={() => setNotifOpen(false)}
+                      aria-hidden="true"
+                    />
+                    <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-sm rounded-2xl border border-violet-500/30 bg-[#17122b] p-4 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
+                      <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-3">
+                        <div className="flex items-center gap-2">
+                          <Bell className="h-4 w-4 text-violet-400" />
+                          <h4 className="text-sm font-semibold text-white">Notifications</h4>
+                        </div>
+                        <span className="text-xs text-zinc-400">{notifications.length} total</span>
                       </div>
-                      <span className="text-xs text-zinc-400">{notifications.length} total</span>
-                    </div>
 
-                    {notifications.length === 0 ? (
-                      <div className="py-8 text-center text-zinc-400 text-xs">
-                        <CheckCircle2 className="mx-auto h-8 w-8 text-zinc-600 mb-2" />
-                        No notifications right now.
-                      </div>
-                    ) : (
-                      <div className="max-h-80 space-y-2 overflow-y-auto pr-1">
-                        {notifications.map((n) => (
-                          <div
-                            key={n.id}
-                            className={`rounded-xl border p-3 text-left transition ${
-                              n.is_read
-                                ? "border-zinc-800/60 bg-[#110e20] text-zinc-400"
-                                : "border-violet-500/40 bg-violet-950/30 text-zinc-200"
-                            }`}
-                          >
-                            <div className="flex items-start justify-between gap-2">
-                              <span className="text-xs font-semibold text-violet-300">{n.title}</span>
-                              <span className="text-[10px] text-zinc-500 whitespace-nowrap">
-                                {new Date(n.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-                              </span>
+                      {notifications.length === 0 ? (
+                        <div className="py-8 text-center text-zinc-400 text-xs">
+                          <CheckCircle2 className="mx-auto h-8 w-8 text-zinc-600 mb-2" />
+                          No notifications right now.
+                        </div>
+                      ) : (
+                        <div className="max-h-80 space-y-2 overflow-y-auto pr-1">
+                          {notifications.map((n) => (
+                            <div
+                              key={n.id}
+                              className={`rounded-xl border p-3 text-left transition ${
+                                n.is_read
+                                  ? "border-zinc-800/60 bg-[#110e20] text-zinc-400"
+                                  : "border-violet-500/40 bg-violet-950/30 text-zinc-200"
+                              }`}
+                            >
+                              <div className="flex items-start justify-between gap-2">
+                                <span className="text-xs font-semibold text-violet-300">{n.title}</span>
+                                <span className="text-[10px] text-zinc-500 whitespace-nowrap">
+                                  {new Date(n.created_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                                </span>
+                              </div>
+                              <p className="mt-1 text-xs text-zinc-300 leading-relaxed">{n.message}</p>
                             </div>
-                            <p className="mt-1 text-xs text-zinc-300 leading-relaxed">{n.message}</p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -390,67 +401,74 @@ export function Navbar({
 
                 {/* Dropdown Menu */}
                 {profileOpen && (
-                  <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-64 max-w-xs rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
-                    <div className="px-3 py-2 border-b border-zinc-800 mb-1">
-                      <p className="text-sm font-semibold text-white">{displayName}</p>
-                      <p className="text-xs text-zinc-400 truncate">{currentUser.email}</p>
-                      <div className="mt-1 flex items-center gap-1.5 text-[11px] text-violet-300">
-                        <span className="rounded bg-violet-900/60 px-1.5 py-0.2 border border-violet-700/40 font-mono capitalize">
-                          {currentUser.role}
-                        </span>
-                        <span>{currentUser.branch || "Campus"}</span>
+                  <>
+                    <div
+                      className="fixed inset-0 z-40 bg-black/60 md:hidden"
+                      onClick={() => setProfileOpen(false)}
+                      aria-hidden="true"
+                    />
+                    <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-64 max-w-xs rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
+                      <div className="px-3 py-2 border-b border-zinc-800 mb-1">
+                        <p className="text-sm font-semibold text-white">{displayName}</p>
+                        <p className="text-xs text-zinc-400 truncate">{currentUser.email}</p>
+                        <div className="mt-1 flex items-center gap-1.5 text-[11px] text-violet-300">
+                          <span className="rounded bg-violet-900/60 px-1.5 py-0.2 border border-violet-700/40 font-mono capitalize">
+                            {currentUser.role}
+                          </span>
+                          <span>{currentUser.branch || "Campus"}</span>
+                        </div>
                       </div>
-                    </div>
 
-                    <button
-                      onClick={() => {
-                        setProfileOpen(false);
-                        onOpenProfile();
-                      }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium text-zinc-200 transition hover:bg-violet-950/60 hover:text-white"
-                    >
-                      <User className="h-4 w-4 text-violet-400" />
-                      My Academic Profile
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setProfileOpen(false);
-                        onNavigateTab(mode === "user" ? "my-reports" : "staff-dashboard");
-                      }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium text-zinc-200 transition hover:bg-violet-950/60 hover:text-white"
-                    >
-                      <Layers className="h-4 w-4 text-violet-400" />
-                      {mode === "user" ? "My Reports & Claims" : "Staff Supervision"}
-                    </button>
-
-                    {/* Mode Switch (Only for authorized staff) */}
-                    {isStaffOrSupervisor && (
                       <button
                         onClick={() => {
                           setProfileOpen(false);
-                          onSwitchMode(mode === "user" ? "staff" : "user");
+                          onOpenProfile();
                         }}
-                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium text-amber-300 transition hover:bg-amber-950/40"
+                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-medium text-zinc-200 transition hover:bg-violet-950/60 hover:text-white min-h-[42px]"
                       >
-                        <Shield className="h-4 w-4 text-amber-400" />
-                        Switch to {mode === "user" ? "Staff Mode" : "User Mode"}
+                        <User className="h-4 w-4 text-violet-400" />
+                        My Academic Profile
                       </button>
-                    )}
 
-                    <div className="my-1 border-t border-zinc-800" />
+                      <button
+                        onClick={() => {
+                          setProfileOpen(false);
+                          onNavigateTab(mode === "user" ? "my-reports" : "staff-dashboard");
+                        }}
+                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-medium text-zinc-200 transition hover:bg-violet-950/60 hover:text-white min-h-[42px]"
+                      >
+                        <Layers className="h-4 w-4 text-violet-400" />
+                        {mode === "user" ? "My Reports & Claims" : "Staff Supervision"}
+                      </button>
 
-                    <button
-                      onClick={() => {
-                        setProfileOpen(false);
-                        onSignOut();
-                      }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium text-red-400 transition hover:bg-red-950/30 hover:text-red-300"
-                    >
-                      <LogOut className="h-4 w-4 text-red-400" />
-                      Sign Out
-                    </button>
-                  </div>
+                      {/* Mode Switch (Only for authorized staff) */}
+                      {isStaffOrSupervisor && (
+                        <button
+                          onClick={() => {
+                            setProfileOpen(false);
+                            onSwitchMode(mode === "user" ? "staff" : "user");
+                          }}
+                          className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-medium text-amber-300 transition hover:bg-amber-950/40 min-h-[42px]"
+                        >
+                          <Shield className="h-4 w-4 text-amber-400" />
+                          Switch to {mode === "user" ? "Staff Mode" : "User Mode"}
+                        </button>
+                      )}
+
+                      <div className="my-1 border-t border-zinc-800" />
+
+                      <button
+                        onClick={() => {
+                          setProfileOpen(false);
+                          onSignOut();
+                        }}
+                        className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-medium text-red-400 transition hover:bg-red-950/30 hover:text-red-300 min-h-[42px]"
+                      >
+                        <LogOut className="h-4 w-4 text-red-400" />
+                        Sign Out
+                      </button>
+                    </div>
+                  </>
                 )}
               </div>
             </div>
@@ -661,5 +679,163 @@ export function Navbar({
         </div>
       )}
     </header>
+
+    {/* Mobile Bottom Navigation Bar (Screens < md, Logged In) */}
+    {currentUser && (
+      <nav
+        aria-label="Mobile Navigation"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-violet-500/20 bg-[#0d0a1a]/95 backdrop-blur-xl px-2 py-1 shadow-[0_-4px_25px_rgba(0,0,0,0.6)]"
+      >
+        <div className="grid grid-cols-4 w-full max-w-md mx-auto">
+          {mode === "user" ? (
+            <>
+              <button
+                onClick={() => {
+                  onNavigateTab("dashboard");
+                  setNotifOpen(false);
+                }}
+                className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "dashboard" && !notifOpen
+                    ? "text-violet-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <LayoutDashboard className="h-5 w-5" />
+                <span className="text-[10px] mt-1 leading-none">Dashboard</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  onNavigateTab("browse");
+                  setNotifOpen(false);
+                }}
+                className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "browse" && !notifOpen
+                    ? "text-violet-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <Search className="h-5 w-5" />
+                <span className="text-[10px] mt-1 leading-none">Browse</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  onNavigateTab("my-reports");
+                  setNotifOpen(false);
+                }}
+                className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "my-reports" && !notifOpen
+                    ? "text-violet-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <FileText className="h-5 w-5" />
+                <span className="text-[10px] mt-1 leading-none">My Reports</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setNotifOpen(!notifOpen);
+                  setProfileOpen(false);
+                }}
+                className={`relative flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  notifOpen
+                    ? "text-violet-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <div className="relative">
+                  <Bell className="h-5 w-5" />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-violet-600 text-[9px] font-bold text-white shadow-md">
+                      {unreadCount}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] mt-1 leading-none">Alerts</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  onNavigateTab("staff-dashboard");
+                  setNotifOpen(false);
+                }}
+                className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "staff-dashboard"
+                    ? "text-amber-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <Shield className="h-5 w-5" />
+                <span className="text-[10px] mt-1 leading-none">Overview</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  onNavigateTab("staff-matches");
+                  setNotifOpen(false);
+                }}
+                className={`relative flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "staff-matches"
+                    ? "text-amber-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <div className="relative">
+                  <Sparkles className="h-5 w-5" />
+                  {pendingMatchesCount > 0 && (
+                    <span className="absolute -top-1 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] font-bold text-black shadow-md">
+                      {pendingMatchesCount}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] mt-1 leading-none">Matches</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  onNavigateTab("staff-claims");
+                  setNotifOpen(false);
+                }}
+                className={`relative flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "staff-claims"
+                    ? "text-amber-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <div className="relative">
+                  <UserCheck className="h-5 w-5" />
+                  {pendingClaimsCount > 0 && (
+                    <span className="absolute -top-1 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] font-bold text-black shadow-md">
+                      {pendingClaimsCount}
+                    </span>
+                  )}
+                </div>
+                <span className="text-[10px] mt-1 leading-none">Claims</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  onNavigateTab("staff-manual");
+                  setNotifOpen(false);
+                }}
+                className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition min-h-[48px] ${
+                  activeTab === "staff-manual"
+                    ? "text-amber-300 font-bold"
+                    : "text-zinc-400 hover:text-white"
+                }`}
+              >
+                <Layers className="h-5 w-5" />
+                <span className="text-[10px] mt-1 leading-none">Manual</span>
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
+    )}
+  </>
   );
 }

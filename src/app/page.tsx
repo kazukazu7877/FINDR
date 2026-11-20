@@ -119,6 +119,50 @@ export default function FindrApp() {
   // Load user session on mount
   useEffect(() => {
     try {
+      if (typeof window !== "undefined") {
+        const params = new URLSearchParams(window.location.search);
+        const tabParam = params.get("tab");
+        const modeParam = params.get("mode") as "user" | "staff" | null;
+        const previewUser = params.get("previewUser");
+
+        if (previewUser === "staff") {
+          const mockStaff: UserProfile = {
+            id: 1,
+            email: "krishivchhabra27@gmail.com",
+            full_name: "Krishiv Chhabra",
+            role: "staff",
+            phone: "9876543210",
+            academic_year: "Faculty / Campus Staff",
+            branch: "Computer Science & Engineering",
+            section: "N/A",
+            created_at: new Date().toISOString(),
+          };
+          setCurrentUser(mockStaff);
+          setMode("staff");
+          setActiveTab(tabParam || "staff-dashboard");
+          return;
+        } else if (previewUser === "student") {
+          const mockStudent: UserProfile = {
+            id: 2,
+            email: "student@university.edu",
+            full_name: "Aarav Sharma",
+            role: "student",
+            phone: "9876543211",
+            academic_year: "3rd Year (Junior)",
+            branch: "Computer Science & Engineering",
+            section: "Section A",
+            created_at: new Date().toISOString(),
+          };
+          setCurrentUser(mockStudent);
+          setMode("user");
+          setActiveTab(tabParam || "dashboard");
+          return;
+        }
+
+        if (modeParam) setMode(modeParam);
+        if (tabParam) setActiveTab(tabParam);
+      }
+
       const savedUser = localStorage.getItem("findr_user");
       if (savedUser) {
         const parsed = JSON.parse(savedUser) as UserProfile;
@@ -438,7 +482,7 @@ export default function FindrApp() {
       </div>
 
       {/* Main Content Area */}
-      <main className="relative z-10 flex-1 w-full">
+      <main className="relative z-10 flex-1 w-full max-w-full overflow-x-hidden">
         {/* =========================================================================
             1. LANDING PAGE (Unauthenticated or 'home' tab)
         ========================================================================== */}
@@ -471,7 +515,7 @@ export default function FindrApp() {
             2. USER MODE WORKSPACES (when logged in and mode === 'user')
         ========================================================================== */}
         {currentUser && mode === "user" && (
-          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8 pb-24 md:pb-8 sm:px-6 lg:px-8">
             {/* ------------------- USER DASHBOARD ------------------- */}
             {activeTab === "dashboard" && (
               <div className="space-y-8 animate-fadeIn">
@@ -835,12 +879,12 @@ export default function FindrApp() {
                           Photograph (Optional for lost, highly recommended for found)
                         </label>
                         <div className="mt-1 flex items-center gap-4">
-                          <label className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-[#0e0a1e] px-4 py-6 text-center cursor-pointer hover:border-violet-500 transition w-full">
-                            <span className="text-xs font-medium text-violet-300">
-                              {selectedFile ? selectedFile.name : "Click to select or drag photo here"}
+                          <label className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-700 bg-[#0e0a1e] px-4 py-6 text-center cursor-pointer hover:border-violet-500 transition w-full min-h-[56px]">
+                            <span className="text-xs font-semibold text-violet-300">
+                              {selectedFile ? selectedFile.name : "Tap to take photo or choose from library"}
                             </span>
-                            <span className="text-[10px] text-zinc-500 mt-1">
-                              JPEG, PNG, WEBP (Processed by Gemini Vision for 65% match weighting)
+                            <span className="text-[10px] text-zinc-400 mt-1">
+                              JPEG, PNG, WEBP (Multimodal Vision feature extraction for 65% match score)
                             </span>
                             <input
                               type="file"
@@ -1182,18 +1226,20 @@ export default function FindrApp() {
             3. STAFF MODE WORKSPACES (when logged in and mode === 'staff')
         ========================================================================== */}
         {currentUser && mode === "staff" && (
-          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
+          <div className="mx-auto max-w-7xl w-full min-w-0 px-4 py-6 sm:py-8 pb-24 md:pb-8 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
             {/* Staff Mode Top Bar / Supervisory Banner */}
-            <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-r from-[#211633] via-[#1a122e] to-[#160e29] p-6 sm:p-8 shadow-xl">
+            <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-r from-[#211633] via-[#1a122e] to-[#160e29] p-4 sm:p-6 md:p-8 shadow-xl">
               <div className="max-w-3xl">
                 <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-amber-400" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
+                  <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-amber-400 shrink-0" />
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-amber-300">
                     Campus Staff Supervisory Workspace
                   </span>
                 </div>
-                <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-white tracking-tight">Supervision & Verification Center</h2>
-                <p className="text-sm text-zinc-300 mt-2 leading-relaxed">
+                <h2 className="mt-2 text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight break-words">
+                  Supervision & Verification Center
+                </h2>
+                <p className="text-xs sm:text-sm text-zinc-300 mt-2 leading-relaxed break-words">
                   Logged in as {currentUser.full_name || currentUser.name || "Staff"} ({currentUser.role}). Review AI candidate pairings, verify claims, and coordinate releases across campus departments.
                 </p>
               </div>
@@ -1632,7 +1678,7 @@ export default function FindrApp() {
                         value={manualLostId || ""}
                         onChange={(e) => setManualLostId(Number(e.target.value) || null)}
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
+                        className="w-full max-w-full min-w-0 rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px] truncate"
                       >
                         <option value="">-- Choose Lost Report --</option>
                         {reports
@@ -1653,7 +1699,7 @@ export default function FindrApp() {
                         value={manualFoundId || ""}
                         onChange={(e) => setManualFoundId(Number(e.target.value) || null)}
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
+                        className="w-full max-w-full min-w-0 rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px] truncate"
                       >
                         <option value="">-- Choose Found Report --</option>
                         {reports
@@ -1728,14 +1774,14 @@ export default function FindrApp() {
       )}
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-zinc-900 bg-[#090714] py-8 text-center text-xs text-zinc-500">
+      <footer className="mt-auto border-t border-zinc-900 bg-[#090714] py-8 text-center text-xs text-zinc-500 w-full max-w-full overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
             <span className="font-bold text-zinc-300">FINDR Campus Platform</span>
             <span>·</span>
             <span>Helping lost belongings find their way back</span>
           </div>
-          <div className="flex items-center gap-4 text-zinc-400">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-2 sm:gap-4 text-zinc-400">
             <span>65-25-10 AI Multimodal Engine</span>
             <span>·</span>
             <span>Campus Staff Supervised</span>
