@@ -24,6 +24,20 @@ export async function POST(req: NextRequest) {
     });
 
     if (authErr) {
+      console.error("Supabase Auth login error:", authErr);
+      if (
+        authErr.name === "AuthRetryableFetchError" ||
+        authErr.status === 0 ||
+        authErr.message?.includes("fetch failed")
+      ) {
+        return NextResponse.json(
+          {
+            error:
+              "Unable to reach Supabase authentication server. Your Supabase project (azjyyijcrqqqjbpifgcb) is currently paused or inactive in your Supabase dashboard. Please click 'Restore project' in Supabase to resume it.",
+          },
+          { status: 503 }
+        );
+      }
       return NextResponse.json(
         { error: "Invalid email or password." },
         { status: 401 }
