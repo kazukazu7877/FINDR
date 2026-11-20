@@ -128,22 +128,22 @@ export function Navbar({
       <header className="sticky top-0 z-50 w-full border-b border-[#2d244a] bg-[#0d0a1a]/90 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2 sm:gap-6 min-w-0">
           <button
             onClick={(e) => handleSmoothNav("home", e)}
-            className="flex items-center gap-2.5 text-left transition hover:opacity-90 focus:outline-none"
+            className="flex items-center gap-2 sm:gap-2.5 text-left transition hover:opacity-90 focus:outline-none min-w-0"
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 shadow-lg shadow-purple-900/30">
-              <Sparkles className="h-5 w-5 text-white" />
+            <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 shadow-lg shadow-purple-900/30">
+              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-1.5">
-                <span className="text-xl font-bold tracking-tight text-white">FINDR</span>
-                <span className="rounded bg-violet-500/20 px-1.5 py-0.5 text-[10px] font-semibold text-violet-300 border border-violet-500/30">
+                <span className="text-lg sm:text-xl font-bold tracking-tight text-white">FINDR</span>
+                <span className="rounded bg-violet-500/20 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold text-violet-300 border border-violet-500/30">
                   CAMPUS
                 </span>
               </div>
-              <p className="text-[10px] text-zinc-400">AI Lost & Found Intelligence</p>
+              <p className="hidden sm:block text-[10px] text-zinc-400">AI Lost & Found Intelligence</p>
             </div>
           </button>
 
@@ -473,16 +473,16 @@ export function Navbar({
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => onOpenAuth("login")}
-                className="rounded-xl border border-violet-500/30 bg-[#161224] px-4 py-2 text-xs font-semibold text-zinc-200 transition hover:border-violet-500/60 hover:text-white"
+                className="hidden sm:inline-flex rounded-xl border border-violet-500/30 bg-[#161224] px-4 py-2 text-xs font-semibold text-zinc-200 transition hover:border-violet-500/60 hover:text-white min-h-[40px] items-center"
               >
                 Sign In
               </button>
               <button
                 onClick={() => onOpenAuth("register")}
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-violet-900/30 transition hover:from-violet-500 hover:to-purple-500"
+                className="rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-3.5 sm:px-4 py-2 text-xs font-semibold text-white shadow-md shadow-violet-900/30 transition hover:from-violet-500 hover:to-purple-500 min-h-[40px] flex items-center"
               >
                 Get Started
               </button>
@@ -496,7 +496,7 @@ export function Navbar({
               setProfileOpen(false);
               setNotifOpen(false);
             }}
-            className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-[#161224] text-zinc-300 transition hover:border-violet-500/40 hover:text-white focus:outline-none"
+            className="flex lg:hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-zinc-800 bg-[#161224] text-zinc-300 transition hover:border-violet-500/40 hover:text-white focus:outline-none"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -662,6 +662,31 @@ export function Navbar({
               >
                 FAQs
               </a>
+
+              {/* Mobile Auth Actions when logged out */}
+              {!currentUser && (
+                <div className="pt-2 border-t border-zinc-800/80 space-y-2">
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenAuth("login");
+                    }}
+                    className="w-full text-center rounded-xl border border-violet-500/30 bg-[#161224] px-4 py-3 text-sm font-semibold text-zinc-200 transition hover:border-violet-500/60 hover:text-white min-h-[44px] flex items-center justify-center"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenAuth("register");
+                    }}
+                    className="w-full text-center rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-3 text-sm font-semibold text-white shadow-md shadow-violet-900/30 transition hover:from-violet-500 hover:to-purple-500 min-h-[44px] flex items-center justify-center"
+                  >
+                    Get Started
+                  </button>
+                </div>
+              )}
+
               {currentUser && (
                 <button
                   onClick={() => {

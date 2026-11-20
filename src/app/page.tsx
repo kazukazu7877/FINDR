@@ -455,10 +455,10 @@ export default function FindrApp() {
   return (
     <div className="relative min-h-screen flex flex-col bg-[#0a0715] text-[#f0eef5] selection:bg-violet-500 selection:text-white overflow-x-hidden">
       {/* ── Ambient Background Lighting Orbs (Layered Depth) ── */}
-      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/4 h-[550px] w-[550px] rounded-full bg-violet-600/10 blur-[150px] animate-pulse-slow" />
-        <div className="absolute top-1/3 -right-40 h-[600px] w-[600px] rounded-full bg-purple-700/10 blur-[170px] animate-drift" />
-        <div className="absolute -bottom-40 left-10 h-[500px] w-[500px] rounded-full bg-indigo-600/10 blur-[150px] animate-pulse-slow" />
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden max-w-full">
+        <div className="absolute -top-40 left-1/4 h-[320px] w-[320px] sm:h-[550px] sm:w-[550px] rounded-full bg-violet-600/10 blur-[100px] sm:blur-[150px] animate-pulse-slow" />
+        <div className="absolute top-1/3 right-0 sm:-right-40 h-[320px] w-[320px] sm:h-[600px] sm:w-[600px] rounded-full bg-purple-700/10 blur-[110px] sm:blur-[170px] animate-drift" />
+        <div className="absolute -bottom-40 left-10 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full bg-indigo-600/10 blur-[100px] sm:blur-[150px] animate-pulse-slow" />
       </div>
 
       {/* Top Application Header & Profile Taskbar */}
