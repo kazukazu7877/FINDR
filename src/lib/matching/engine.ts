@@ -185,6 +185,14 @@ export function compareLocation(
     return { score: null, summary: "Location information incomplete or unspecified" };
   }
 
+  const cleanA = locA.trim().toLowerCase();
+  const cleanB = locB.trim().toLowerCase();
+
+  // 1. Exact case-insensitive match
+  if (cleanA === cleanB) {
+    return { score: 1.0, summary: `Exact location match: ${locA.trim()}` };
+  }
+
   const tok = (str: string) => {
     const words = str.toLowerCase().match(/[a-z0-9]{2,}/g) || [];
     return new Set(words.filter((w) => !LOCATION_STOPWORDS.has(w)));
@@ -193,15 +201,27 @@ export function compareLocation(
   const tokA = tok(locA);
   const tokB = tok(locB);
 
+  // 2. Substring containment (e.g., "Outside Room 304, near staircase" vs "Room 304")
+  const isSubstring =
+    (cleanA.length >= 4 && cleanB.includes(cleanA)) ||
+    (cleanB.length >= 4 && cleanA.includes(cleanB));
+
   if (tokA.size === 0 || tokB.size === 0) {
+    if (isSubstring) {
+      return { score: 0.85, summary: `Proximity match (${locA.trim()} vs ${locB.trim()})` };
+    }
     return { score: null, summary: "Location keywords unspecified" };
   }
 
   const common = [...tokA].filter((x) => tokB.has(x));
   const union = new Set([...tokA, ...tokB]);
-  const score = union.size > 0 ? common.length / union.size : 0;
-  const summary = common.length > 0
-    ? `Shared location keywords: ${common.join(", ")}`
+  let score = union.size > 0 ? common.length / union.size : 0;
+  if (isSubstring) {
+    score = Math.max(score, 0.85);
+  }
+
+  const summary = common.length > 0 || isSubstring
+    ? `Shared location keywords: ${common.length > 0 ? common.join(", ") : locA.trim()}`
     : `Different locations (${locA.trim()} vs ${locB.trim()})`;
 
   return { score, summary };

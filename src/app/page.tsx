@@ -39,6 +39,7 @@ import { ReportStatusTracker } from "@/components/status/ReportStatusTracker";
 import { AuthModal } from "@/components/modals/AuthModal";
 import { ClaimModal } from "@/components/modals/ClaimModal";
 import { ProfileModal } from "@/components/modals/ProfileModal";
+import { LocationCombobox } from "@/components/ui/LocationCombobox";
 import { Report, Match, Claim, Notification, UserProfile } from "@/types/database";
 
 const CATEGORIES = [
@@ -92,7 +93,7 @@ export default function FindrApp() {
   const [formError, setFormError] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("Electronics");
-  const [location, setLocation] = useState(CAMPUS_LOCATIONS[1]);
+  const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [color, setColor] = useState("");
@@ -221,7 +222,7 @@ export default function FindrApp() {
   const resetReportForm = () => {
     setTitle("");
     setDescription("");
-    setLocation(CAMPUS_LOCATIONS[1]);
+    setLocation("");
     setBrand("");
     setColor("");
     setDistinctiveFeatures("");
@@ -383,13 +384,19 @@ export default function FindrApp() {
     return reports.filter((r) => {
       if (browseTypeFilter !== "all" && r.type !== browseTypeFilter) return false;
       if (browseCategoryFilter !== "All" && r.category !== browseCategoryFilter) return false;
-      if (browseLocationFilter !== "All Campus" && r.location !== browseLocationFilter) return false;
+      if (
+        browseLocationFilter !== "All Campus" &&
+        !r.location?.toLowerCase().includes(browseLocationFilter.toLowerCase())
+      ) {
+        return false;
+      }
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchesTitle = r.title.toLowerCase().includes(q);
         const matchesDesc = r.description.toLowerCase().includes(q);
         const matchesBrand = r.brand?.toLowerCase().includes(q);
-        if (!matchesTitle && !matchesDesc && !matchesBrand) return false;
+        const matchesLoc = r.location?.toLowerCase().includes(q);
+        if (!matchesTitle && !matchesDesc && !matchesBrand && !matchesLoc) return false;
       }
       return true;
     });
@@ -700,17 +707,13 @@ export default function FindrApp() {
                           <label className="block text-xs font-semibold text-zinc-300 mb-1">
                             Campus Location <span className="text-violet-400">*</span>
                           </label>
-                          <select
+                          <LocationCombobox
                             value={location}
-                            onChange={(e) => setLocation(e.target.value)}
-                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white focus:border-violet-500 focus:outline-none"
-                          >
-                            {CAMPUS_LOCATIONS.filter((l) => l !== "All Campus").map((loc) => (
-                              <option key={loc} value={loc} className="bg-[#141026]">
-                                {loc}
-                              </option>
-                            ))}
-                          </select>
+                            onChange={(val) => setLocation(val)}
+                            suggestions={CAMPUS_LOCATIONS.filter((l) => l !== "All Campus")}
+                            placeholder="Select or type a campus location"
+                            required
+                          />
                         </div>
                       </div>
 
