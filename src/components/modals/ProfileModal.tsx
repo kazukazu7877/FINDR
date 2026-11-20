@@ -40,7 +40,7 @@ export function ProfileModal({
   currentUser,
   onProfileUpdated,
 }: ProfileModalProps) {
-  const [fullName, setFullName] = useState(currentUser.full_name);
+  const [fullName, setFullName] = useState(currentUser.full_name || currentUser.name || "");
   const [phone, setPhone] = useState(currentUser.phone || "");
   const [academicYear, setAcademicYear] = useState(currentUser.academic_year || ACADEMIC_YEARS[0]);
   const [branch, setBranch] = useState(currentUser.branch || BRANCHES[0]);

@@ -44,6 +44,8 @@ export function Navbar({
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
   const isStaffOrSupervisor = currentUser?.role === "staff" || currentUser?.role === "supervisor";
+  const displayName = currentUser?.full_name || currentUser?.name || currentUser?.email?.split("@")[0] || "User";
+  const displayInitial = (displayName.charAt(0) || "U").toUpperCase();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#2d244a] bg-[#0d0a1a]/90 backdrop-blur-md">
@@ -263,13 +265,13 @@ export function Navbar({
                   className="flex items-center gap-2.5 rounded-xl border border-zinc-800 bg-[#161224] p-1.5 pl-3 transition hover:border-violet-500/40 focus:outline-none"
                 >
                   <div className="text-right hidden sm:block">
-                    <p className="text-xs font-semibold text-white leading-none">{currentUser.full_name}</p>
+                    <p className="text-xs font-semibold text-white leading-none">{displayName}</p>
                     <p className="text-[10px] text-violet-400 mt-1 capitalize leading-none">
                       {currentUser.role} · {currentUser.academic_year || "Student"}
                     </p>
                   </div>
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-violet-600 to-purple-500 font-bold text-white text-xs shadow">
-                    {currentUser.full_name.charAt(0).toUpperCase()}
+                    {displayInitial}
                   </div>
                   <ChevronDown className="h-4 w-4 text-zinc-400" />
                 </button>
@@ -278,13 +280,13 @@ export function Navbar({
                 {profileOpen && (
                   <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50">
                     <div className="px-3 py-2 border-b border-zinc-800 mb-1">
-                      <p className="text-sm font-semibold text-white">{currentUser.full_name}</p>
+                      <p className="text-sm font-semibold text-white">{displayName}</p>
                       <p className="text-xs text-zinc-400 truncate">{currentUser.email}</p>
                       <div className="mt-1 flex items-center gap-1.5 text-[11px] text-violet-300">
                         <span className="rounded bg-violet-900/60 px-1.5 py-0.2 border border-violet-700/40 font-mono capitalize">
                           {currentUser.role}
                         </span>
-                        <span>{currentUser.branch}</span>
+                        <span>{currentUser.branch || "Campus"}</span>
                       </div>
                     </div>
 

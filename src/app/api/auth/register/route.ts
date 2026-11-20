@@ -125,6 +125,7 @@ export async function POST(req: NextRequest) {
         id: userRecordId,
         email: trimmedEmail,
         name: trimmedName,
+        full_name: trimmedName,
         phone: trimmedPhone,
         academic_year: trimmedYear,
         branch: trimmedBranch,

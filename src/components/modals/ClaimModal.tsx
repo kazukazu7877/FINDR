@@ -185,7 +185,7 @@ export function ClaimModal({
                 Submitting Claimant Identity
               </span>
               <p className="text-zinc-200 font-medium">
-                {currentUser.full_name} · {currentUser.branch} ({currentUser.academic_year})
+                {currentUser.full_name || currentUser.name || "User"} · {currentUser.branch || "Campus"} ({currentUser.academic_year || "Student"})
               </p>
               <p className="text-[11px] text-zinc-400 truncate mt-0.5">
                 Contact: {currentUser.email} | {currentUser.phone || "No phone saved"}

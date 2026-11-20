@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
         id: profile.id,
         email: profile.email,
         name: profile.full_name,
+        full_name: profile.full_name,
         role: profile.role || "student",
         academic_year: profile.academic_year || "",
         branch: profile.branch || "",

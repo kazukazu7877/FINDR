@@ -4,13 +4,14 @@ export interface UserProfile {
   id: number;
   email: string;
   full_name: string;
+  name?: string;
   academic_year: string;
   branch: string;
   section: string;
   phone?: string | null;
   role: UserRole;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export type ReportType = "lost" | "found";

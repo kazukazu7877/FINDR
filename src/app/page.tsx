@@ -121,16 +121,21 @@ export default function FindrApp() {
       const savedUser = localStorage.getItem("findr_user");
       if (savedUser) {
         const parsed = JSON.parse(savedUser) as UserProfile;
-        setCurrentUser(parsed);
-        if (parsed.role === "staff" || parsed.role === "supervisor") {
-          // Keep preference or start in User mode
-          setActiveTab("dashboard");
-        } else {
-          setActiveTab("dashboard");
+        if (parsed && typeof parsed === "object") {
+          if (!parsed.full_name && parsed.name) parsed.full_name = parsed.name;
+          if (!parsed.name && parsed.full_name) parsed.name = parsed.full_name;
+          setCurrentUser(parsed);
+          localStorage.setItem("findr_user", JSON.stringify(parsed));
+          if (parsed.role === "staff" || parsed.role === "supervisor") {
+            setMode("staff");
+            setActiveTab("staff-dashboard");
+          } else {
+            setActiveTab("dashboard");
+          }
         }
       }
     } catch {
-      // Ignore parse error
+      localStorage.removeItem("findr_user");
     }
   }, []);
 
@@ -296,7 +301,7 @@ export default function FindrApp() {
         body: JSON.stringify({
           matchId,
           action,
-          reviewerName: `${currentUser.full_name} (${currentUser.role})`,
+          reviewerName: `${currentUser.full_name || currentUser.name || "Staff"} (${currentUser.role})`,
           notes: notes || "Reviewed via Staff Workspace",
         }),
       });
@@ -324,7 +329,7 @@ export default function FindrApp() {
         body: JSON.stringify({
           claimId,
           action,
-          reviewerName: `${currentUser.full_name} (${currentUser.role})`,
+          reviewerName: `${currentUser.full_name || currentUser.name || "Staff"} (${currentUser.role})`,
           staffNotes: staffNotes || `Marked ${action} by supervisor`,
         }),
       });
@@ -353,7 +358,7 @@ export default function FindrApp() {
           action: "manual",
           lostReportId: manualLostId,
           foundReportId: manualFoundId,
-          reviewerName: `${currentUser.full_name} (${currentUser.role})`,
+          reviewerName: `${currentUser.full_name || currentUser.name || "Staff"} (${currentUser.role})`,
           notes: manualReason.trim() || "Manual staff pairing",
         }),
       });
@@ -456,7 +461,7 @@ export default function FindrApp() {
                       Campus Student Portal
                     </span>
                     <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-                      Welcome back, {currentUser.full_name}!
+                      Welcome back, {currentUser.full_name || currentUser.name || "User"}!
                     </h2>
                     <p className="mt-2 text-sm text-zinc-300 leading-relaxed">
                       Lost an item or found someone&apos;s belonging? Use the quick actions below.
@@ -811,7 +816,7 @@ export default function FindrApp() {
                           Report Attribution
                         </span>
                         <p className="text-zinc-200 mt-0.5 font-medium">
-                          Associated with {currentUser.full_name} ({currentUser.email} | {currentUser.phone || "No phone"})
+                          Associated with {currentUser.full_name || currentUser.name || "User"} ({currentUser.email} | {currentUser.phone || "No phone"})
                         </p>
                       </div>
 
@@ -1126,7 +1131,7 @@ export default function FindrApp() {
                 </div>
                 <h2 className="mt-1 text-2xl font-bold text-white">Supervision & Verification Center</h2>
                 <p className="text-xs text-zinc-300 mt-1">
-                  Logged in as {currentUser.full_name} ({currentUser.role}). Review AI candidate pairings, verify claims, and coordinate releases.
+                  Logged in as {currentUser.full_name || currentUser.name || "Staff"} ({currentUser.role}). Review AI candidate pairings, verify claims, and coordinate releases.
                 </p>
               </div>
 

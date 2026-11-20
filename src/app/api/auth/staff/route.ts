@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     // 2. Verify staff or supervisor role in public.users
     const { data: profile, error: profileErr } = await supabase
       .from("users")
-      .select("id, email, full_name, role")
+      .select("*")
       .eq("email", email)
       .single();
 
@@ -70,7 +70,12 @@ export async function POST(req: NextRequest) {
         id: profile.id,
         email: profile.email,
         name: profile.full_name,
+        full_name: profile.full_name,
         role: profile.role,
+        academic_year: profile.academic_year || "Staff",
+        branch: profile.branch || "Campus Administration",
+        section: profile.section || "A",
+        phone: profile.phone || "",
       },
     });
   } catch (err: unknown) {
