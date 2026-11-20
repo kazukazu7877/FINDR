@@ -46,6 +46,7 @@ export interface Report {
   status: ReportStatus;
   created_at: string;
   contact_info?: string | null;
+  user?: UserProfile;
 }
 
 export type MatchStatus = "pending" | "confirmed" | "dismissed" | "investigating";
@@ -70,6 +71,24 @@ export interface Match {
   found_report?: Report;
 }
 
+export type ClaimStatus = "pending" | "approved" | "rejected" | "more_info_needed";
+
+export interface Claim {
+  id: number;
+  report_id: number;
+  claimant_id: number;
+  claim_reason: string;
+  identifying_details: string;
+  additional_evidence?: string | null;
+  status: ClaimStatus;
+  staff_notes?: string | null;
+  reviewed_by?: string | null;
+  reviewed_at?: string | null;
+  created_at: string;
+  report?: Report;
+  claimant?: UserProfile;
+}
+
 export interface Notification {
   id: number;
   user_id: number;
@@ -79,6 +98,20 @@ export interface Notification {
   report_id?: number | null;
   match_id?: number | null;
   is_read: boolean;
+  created_at: string;
+}
+
+export type NotificationChannel = "email" | "sms" | "in_app";
+export type DeliveryStatus = "pending" | "queued" | "sent" | "delivered" | "failed";
+
+export interface NotificationDelivery {
+  id: number;
+  notification_id?: number | null;
+  recipient_email?: string | null;
+  recipient_phone?: string | null;
+  channel: NotificationChannel;
+  status: DeliveryStatus;
+  error_message?: string | null;
   created_at: string;
 }
 
@@ -102,4 +135,3 @@ export interface AuditLog {
   details?: string | null;
   created_at: string;
 }
-
