@@ -417,6 +417,8 @@ export default function FindrApp() {
         onSignOut={handleSignOut}
         onNavigateTab={(tab) => setActiveTab(tab)}
         activeTab={activeTab}
+        pendingMatchesCount={matches.filter((m) => m.status === "pending").length}
+        pendingClaimsCount={claims.filter((c) => c.status === "pending").length}
       />
 
       {/* Main Content Area */}
@@ -1120,63 +1122,19 @@ export default function FindrApp() {
         ========================================================================== */}
         {currentUser && mode === "staff" && (
           <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8 animate-fadeIn">
-            {/* Staff Mode Top Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-amber-500/30 bg-gradient-to-r from-[#211633] via-[#1a122e] to-[#160e29] p-6 shadow-xl">
-              <div>
+            {/* Staff Mode Top Bar / Supervisory Banner */}
+            <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-r from-[#211633] via-[#1a122e] to-[#160e29] p-6 sm:p-8 shadow-xl">
+              <div className="max-w-3xl">
                 <div className="flex items-center gap-2">
                   <Shield className="h-5 w-5 text-amber-400" />
                   <span className="text-xs font-bold uppercase tracking-wider text-amber-300">
                     Campus Staff Supervisory Workspace
                   </span>
                 </div>
-                <h2 className="mt-1 text-2xl font-bold text-white">Supervision & Verification Center</h2>
-                <p className="text-xs text-zinc-300 mt-1">
-                  Logged in as {currentUser.full_name || currentUser.name || "Staff"} ({currentUser.role}). Review AI candidate pairings, verify claims, and coordinate releases.
+                <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-white tracking-tight">Supervision & Verification Center</h2>
+                <p className="text-sm text-zinc-300 mt-2 leading-relaxed">
+                  Logged in as {currentUser.full_name || currentUser.name || "Staff"} ({currentUser.role}). Review AI candidate pairings, verify claims, and coordinate releases across campus departments.
                 </p>
-              </div>
-
-              {/* Sub-navigation pills */}
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setActiveTab("staff-dashboard")}
-                  className={`rounded-xl px-3.5 py-2 text-xs font-semibold transition ${
-                    activeTab === "staff-dashboard"
-                      ? "bg-amber-500 text-black shadow-md"
-                      : "bg-[#140e24] text-zinc-300 hover:text-white"
-                  }`}
-                >
-                  Overview
-                </button>
-                <button
-                  onClick={() => setActiveTab("staff-matches")}
-                  className={`rounded-xl px-3.5 py-2 text-xs font-semibold transition ${
-                    activeTab === "staff-matches"
-                      ? "bg-amber-500 text-black shadow-md"
-                      : "bg-[#140e24] text-zinc-300 hover:text-white"
-                  }`}
-                >
-                  AI Match Review ({matches.filter((m) => m.status === "pending").length})
-                </button>
-                <button
-                  onClick={() => setActiveTab("staff-claims")}
-                  className={`rounded-xl px-3.5 py-2 text-xs font-semibold transition ${
-                    activeTab === "staff-claims"
-                      ? "bg-amber-500 text-black shadow-md"
-                      : "bg-[#140e24] text-zinc-300 hover:text-white"
-                  }`}
-                >
-                  Ownership Claims ({claims.filter((c) => c.status === "pending").length})
-                </button>
-                <button
-                  onClick={() => setActiveTab("staff-manual")}
-                  className={`rounded-xl px-3.5 py-2 text-xs font-semibold transition ${
-                    activeTab === "staff-manual"
-                      ? "bg-amber-500 text-black shadow-md"
-                      : "bg-[#140e24] text-zinc-300 hover:text-white"
-                  }`}
-                >
-                  Manual Matching
-                </button>
               </div>
             </div>
 

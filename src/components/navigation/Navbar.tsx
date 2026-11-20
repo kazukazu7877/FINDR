@@ -13,6 +13,8 @@ import {
   CheckCircle2,
   Clock,
   AlertCircle,
+  Menu,
+  X,
 } from "lucide-react";
 import { UserProfile, Notification } from "@/types/database";
 
@@ -26,6 +28,8 @@ interface NavbarProps {
   onSignOut: () => void;
   onNavigateTab: (tab: string) => void;
   activeTab: string;
+  pendingMatchesCount?: number;
+  pendingClaimsCount?: number;
 }
 
 export function Navbar({
@@ -38,9 +42,12 @@ export function Navbar({
   onSignOut,
   onNavigateTab,
   activeTab,
+  pendingMatchesCount = 0,
+  pendingClaimsCount = 0,
 }: NavbarProps) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
   const isStaffOrSupervisor = currentUser?.role === "staff" || currentUser?.role === "supervisor";
@@ -123,7 +130,7 @@ export function Navbar({
                   onClick={() => onNavigateTab("staff-dashboard")}
                   className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
                     activeTab === "staff-dashboard"
-                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold shadow-sm"
                       : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
@@ -131,29 +138,39 @@ export function Navbar({
                 </button>
                 <button
                   onClick={() => onNavigateTab("staff-matches")}
-                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition flex items-center gap-1.5 ${
                     activeTab === "staff-matches"
-                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold shadow-sm"
                       : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
-                  AI Match Review
+                  <span>AI Match Review</span>
+                  {pendingMatchesCount > 0 && (
+                    <span className="rounded-full bg-amber-500/30 px-1.5 py-0.2 text-[10px] font-bold text-amber-200 border border-amber-500/40">
+                      {pendingMatchesCount}
+                    </span>
+                  )}
                 </button>
                 <button
                   onClick={() => onNavigateTab("staff-claims")}
-                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+                  className={`rounded-lg px-3 py-1.5 text-sm font-medium transition flex items-center gap-1.5 ${
                     activeTab === "staff-claims"
-                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold shadow-sm"
                       : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
-                  Ownership Claims
+                  <span>Ownership Claims</span>
+                  {pendingClaimsCount > 0 && (
+                    <span className="rounded-full bg-amber-500/30 px-1.5 py-0.2 text-[10px] font-bold text-amber-200 border border-amber-500/40">
+                      {pendingClaimsCount}
+                    </span>
+                  )}
                 </button>
                 <button
                   onClick={() => onNavigateTab("staff-manual")}
                   className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
                     activeTab === "staff-manual"
-                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold shadow-sm"
                       : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
@@ -358,8 +375,170 @@ export function Navbar({
               </button>
             </div>
           )}
+
+          {/* Mobile Menu Toggle Button (Visible on screens < lg) */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(!mobileMenuOpen);
+              setProfileOpen(false);
+              setNotifOpen(false);
+            }}
+            className="flex lg:hidden h-10 w-10 items-center justify-center rounded-xl border border-zinc-800 bg-[#161224] text-zinc-300 transition hover:border-violet-500/40 hover:text-white focus:outline-none"
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-zinc-800 bg-[#120d24]/95 backdrop-blur-md px-4 py-3 space-y-1 animate-fadeIn shadow-2xl">
+          {currentUser ? (
+            mode === "user" ? (
+              <>
+                <button
+                  onClick={() => {
+                    onNavigateTab("dashboard");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition ${
+                    activeTab === "dashboard"
+                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigateTab("browse");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition ${
+                    activeTab === "browse"
+                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  Browse Reports
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigateTab("my-reports");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition ${
+                    activeTab === "my-reports"
+                      ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  My Reports & Tracker
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => {
+                    onNavigateTab("staff-dashboard");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                    activeTab === "staff-dashboard"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  <span>Staff Overview</span>
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigateTab("staff-matches");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                    activeTab === "staff-matches"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  <span>AI Match Review</span>
+                  {pendingMatchesCount > 0 && (
+                    <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-200 border border-amber-500/40">
+                      {pendingMatchesCount}
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigateTab("staff-claims");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                    activeTab === "staff-claims"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  <span>Ownership Claims</span>
+                  {pendingClaimsCount > 0 && (
+                    <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-200 border border-amber-500/40">
+                      {pendingClaimsCount}
+                    </span>
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onNavigateTab("staff-manual");
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                    activeTab === "staff-manual"
+                      ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
+                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                  }`}
+                >
+                  <span>Manual Matching</span>
+                </button>
+              </>
+            )
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  onNavigateTab("home");
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+              >
+                Home
+              </button>
+              <a
+                href="#how-it-works"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+              >
+                How It Works
+              </a>
+              <a
+                href="#why-findr"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+              >
+                Why FINDR
+              </a>
+              <a
+                href="#faqs"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+              >
+                FAQs
+              </a>
+            </>
+          )}
+        </div>
+      )}
     </header>
   );
 }
