@@ -40,7 +40,6 @@ const BRANCHES = [
   "Electrical & Electronics",
   "Mechanical Engineering",
   "Civil Engineering",
-  "Biotechnology",
   "Business Administration",
   "Other Sciences / Arts",
 ];

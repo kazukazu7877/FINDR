@@ -353,6 +353,20 @@ h3 {
   box-shadow: 0 0 0 3px var(--accent-violet-glow) !important;
 }
 
+/* Enhanced focus states for all inputs in the app */
+input:focus, select:focus, textarea:focus {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2), 0 0 12px -2px rgba(139, 92, 246, 0.15) !important;
+}
+
 .findr-label {
   color: var(--text-secondary) !important;
   font-weight: 500 !important;
@@ -531,5 +545,214 @@ h3 {
     min-height: auto !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border-subtle) !important;
+  }
+}
+
+
+/* ── Immersive Animations & Visual Effects ── */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-1deg);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.28;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes drift {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-20px, 15px);
+  }
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes radar-ping {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer-glow {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 7s ease-in-out 1.5s infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 12s ease-in-out infinite;
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 25s linear infinite;
+}
+
+.animate-radar-ping {
+  animation: radar-ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glassmorphism & Surface Utilities */
+.glass-surface {
+  background: rgba(22, 17, 40, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.glass-surface-elevated {
+  background: rgba(26, 20, 48, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  box-shadow: 0 12px 36px -8px rgba(10, 6, 22, 0.7), 0 0 24px -4px rgba(139, 92, 246, 0.15);
+}
+
+.card-interactive {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 14px 32px -8px rgba(109, 40, 217, 0.25), 0 0 20px -2px rgba(139, 92, 246, 0.2);
+}
+
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.4s ease;
+}
+
+.btn-glow:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Page transition utility */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Smooth number count-up illusion for stat cards */
+@keyframes count-pop {
+  0% { transform: scale(0.85); opacity: 0; }
+  60% { transform: scale(1.05); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-count-pop {
+  animation: count-pop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Footer subtle ambient border glow */
+footer {
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+}
+
+/* Accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

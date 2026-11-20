@@ -232,7 +232,7 @@ export function Navbar({
 
                 {/* Notifications Dropdown Drawer */}
                 {notifOpen && (
-                  <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-violet-500/30 bg-[#17122b] p-4 shadow-2xl shadow-purple-950/80 z-50">
+                  <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-violet-500/30 bg-[#17122b] p-4 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
                     <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-3">
                       <div className="flex items-center gap-2">
                         <Bell className="h-4 w-4 text-violet-400" />
@@ -295,7 +295,7 @@ export function Navbar({
 
                 {/* Dropdown Menu */}
                 {profileOpen && (
-                  <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50">
+                  <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
                     <div className="px-3 py-2 border-b border-zinc-800 mb-1">
                       <p className="text-sm font-semibold text-white">{displayName}</p>
                       <p className="text-xs text-zinc-400 truncate">{currentUser.email}</p>
@@ -393,7 +393,7 @@ export function Navbar({
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-zinc-800 bg-[#120d24]/95 backdrop-blur-md px-4 py-3 space-y-1 animate-fadeIn shadow-2xl">
+        <div className="lg:hidden border-t border-zinc-800 bg-[#120d24]/95 backdrop-blur-md px-4 py-3 space-y-1 animate-fade-in-up shadow-2xl">
           {currentUser ? (
             mode === "user" ? (
               <>

@@ -66,7 +66,7 @@ export function WhyFindrSection() {
             return (
               <div
                 key={p.title}
-                className="rounded-2xl border border-zinc-800/80 bg-[#141026] p-6 shadow-md transition hover:border-violet-500/40 hover:bg-[#18132e]"
+                className="group rounded-2xl border border-zinc-800/80 bg-[#140f26]/90 p-6 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#181230] hover:shadow-xl hover:shadow-purple-950/50"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-600/20 text-violet-300 border border-violet-500/30">
                   <Icon className="h-5 w-5" />

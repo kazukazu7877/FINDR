@@ -19,7 +19,8 @@ export async function uploadReportImage(
       console.error("Storage upload error:", error);
       return null;
     }
-    return objectPath;
+    const { data: publicData } = supabase.storage.from(bucket).getPublicUrl(objectPath);
+    return publicData?.publicUrl || objectPath;
   } catch (err) {
     console.error("uploadReportImage error:", err);
     return null;

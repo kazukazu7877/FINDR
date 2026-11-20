@@ -40,6 +40,7 @@ import { AuthModal } from "@/components/modals/AuthModal";
 import { ClaimModal } from "@/components/modals/ClaimModal";
 import { ProfileModal } from "@/components/modals/ProfileModal";
 import { Report, Match, Claim, Notification, UserProfile } from "@/types/database";
+import { formatImageUrl } from "@/lib/utils/image";
 
 const CATEGORIES = [
   "All",
@@ -408,27 +409,36 @@ export default function FindrApp() {
   }, [reports, currentUser]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0d0a1a] text-[#f0eef5] selection:bg-violet-500 selection:text-white">
+    <div className="relative min-h-screen flex flex-col bg-[#0a0715] text-[#f0eef5] selection:bg-violet-500 selection:text-white overflow-x-hidden">
+      {/* ── Ambient Background Lighting Orbs (Layered Depth) ── */}
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+        <div className="absolute -top-40 left-1/4 h-[550px] w-[550px] rounded-full bg-violet-600/10 blur-[150px] animate-pulse-slow" />
+        <div className="absolute top-1/3 -right-40 h-[600px] w-[600px] rounded-full bg-purple-700/10 blur-[170px] animate-drift" />
+        <div className="absolute -bottom-40 left-10 h-[500px] w-[500px] rounded-full bg-indigo-600/10 blur-[150px] animate-pulse-slow" />
+      </div>
+
       {/* Top Application Header & Profile Taskbar */}
-      <Navbar
-        currentUser={currentUser}
-        mode={mode}
-        notifications={notifications}
-        onOpenAuth={(tab) => {
-          setAuthInitialTab(tab || "login");
-          setAuthModalOpen(true);
-        }}
-        onOpenProfile={() => setProfileModalOpen(true)}
-        onSwitchMode={handleSwitchMode}
-        onSignOut={handleSignOut}
-        onNavigateTab={(tab) => setActiveTab(tab)}
-        activeTab={activeTab}
-        pendingMatchesCount={matches.filter((m) => m.status === "pending").length}
-        pendingClaimsCount={claims.filter((c) => c.status === "pending").length}
-      />
+      <div className="relative z-50">
+        <Navbar
+          currentUser={currentUser}
+          mode={mode}
+          notifications={notifications}
+          onOpenAuth={(tab) => {
+            setAuthInitialTab(tab || "login");
+            setAuthModalOpen(true);
+          }}
+          onOpenProfile={() => setProfileModalOpen(true)}
+          onSwitchMode={handleSwitchMode}
+          onSignOut={handleSignOut}
+          onNavigateTab={(tab) => setActiveTab(tab)}
+          activeTab={activeTab}
+          pendingMatchesCount={matches.filter((m) => m.status === "pending").length}
+          pendingClaimsCount={claims.filter((c) => c.status === "pending").length}
+        />
+      </div>
 
       {/* Main Content Area */}
-      <main className="flex-1 w-full">
+      <main className="relative z-10 flex-1 w-full">
         {/* =========================================================================
             1. LANDING PAGE (Unauthenticated or 'home' tab)
         ========================================================================== */}
@@ -515,25 +525,25 @@ export default function FindrApp() {
 
                 {/* Dashboard Metrics */}
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
                     <span className="text-xs text-zinc-400 font-medium">My Active Reports</span>
                     <p className="mt-1 text-2xl font-bold text-white">{myReports.length}</p>
                     <span className="text-[11px] text-violet-400 mt-1 block">Live in system</span>
                   </div>
 
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
                     <span className="text-xs text-zinc-400 font-medium">My Active Claims</span>
                     <p className="mt-1 text-2xl font-bold text-white">{claims.length}</p>
                     <span className="text-[11px] text-amber-400 mt-1 block">Under staff review</span>
                   </div>
 
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
                     <span className="text-xs text-zinc-400 font-medium">Campus Reports</span>
                     <p className="mt-1 text-2xl font-bold text-white">{reports.length}</p>
                     <span className="text-[11px] text-emerald-400 mt-1 block">Total indexed</span>
                   </div>
 
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
                     <span className="text-xs text-zinc-400 font-medium">AI Matches Flagged</span>
                     <p className="mt-1 text-2xl font-bold text-white">{matches.length}</p>
                     <span className="text-[11px] text-purple-400 mt-1 block">Supervised pairings</span>
@@ -630,30 +640,64 @@ export default function FindrApp() {
                   </div>
 
                   {formSuccessReceipt ? (
-                    <div className="py-8 text-center">
-                      <CheckCircle2 className="mx-auto h-16 w-16 text-emerald-400 mb-3 animate-bounce" />
-                      <h3 className="text-xl font-bold text-white">Report Successfully Recorded!</h3>
+                    <div className="py-8 text-center animate-fade-in-up">
+                      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 mb-4 shadow-xl shadow-emerald-950/50">
+                        <CheckCircle2 className="h-8 w-8 text-emerald-400" />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white">Report Successfully Recorded!</h3>
                       <p className="mt-2 text-xs text-zinc-300 max-w-md mx-auto leading-relaxed">
                         Reference Number:{" "}
-                        <span className="font-mono font-bold text-violet-300">
+                        <span className="font-mono font-bold text-violet-300 bg-violet-950/60 px-2 py-0.5 rounded border border-violet-700/50">
                           #FNDR-{formType[0].toUpperCase()}-{formSuccessReceipt.id.toString().padStart(4, "0")}
                         </span>
-                        . FINDR AI has indexed your submission and is actively scanning campus records.
                       </p>
 
-                      <div className="mt-6 flex justify-center gap-3">
+                      {/* 3-Step Next Steps Roadmap */}
+                      <div className="mt-6 max-w-lg mx-auto rounded-2xl border border-zinc-800 bg-[#0e0a1c] p-4 text-left">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-violet-400 block mb-3">
+                          What happens next:
+                        </span>
+                        <div className="space-y-3 text-xs">
+                          <div className="flex items-start gap-2.5">
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-600/30 text-violet-300 text-[10px] font-bold border border-violet-500/40">
+                              1
+                            </span>
+                            <p className="text-zinc-300">
+                              <strong className="text-white">Multimodal AI Indexing:</strong> Features extracted into vector space for 65-25-10 scanning.
+                            </p>
+                          </div>
+                          <div className="flex items-start gap-2.5">
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-600/30 text-violet-300 text-[10px] font-bold border border-violet-500/40">
+                              2
+                            </span>
+                            <p className="text-zinc-300">
+                              <strong className="text-white">24/7 Candidate Scanner:</strong> Continuous automated cross-referencing against new campus reports.
+                            </p>
+                          </div>
+                          <div className="flex items-start gap-2.5">
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-violet-600/30 text-violet-300 text-[10px] font-bold border border-violet-500/40">
+                              3
+                            </span>
+                            <p className="text-zinc-300">
+                              <strong className="text-white">Staff Supervisory Review:</strong> Human supervisors verify candidate matches before contact disclosure.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-7 flex flex-wrap justify-center gap-3">
                         <button
                           onClick={() => {
                             resetReportForm();
                             setActiveTab("my-reports");
                           }}
-                          className="rounded-xl bg-violet-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-violet-500 transition"
+                          className="rounded-xl bg-gradient-to-r from-violet-600 to-purple-600 px-6 py-3 text-xs font-semibold text-white shadow-lg shadow-purple-950/50 hover:from-violet-500 hover:to-purple-500 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                         >
-                          View in My Reports Tracker
+                          View in My Reports Tracker →
                         </button>
                         <button
                           onClick={resetReportForm}
-                          className="rounded-xl border border-zinc-700 bg-zinc-800/40 px-5 py-2.5 text-xs font-semibold text-zinc-300 hover:text-white transition"
+                          className="rounded-xl border border-zinc-700 bg-zinc-800/40 px-5 py-3 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition"
                         >
                           Submit Another Report
                         </button>
@@ -808,6 +852,7 @@ export default function FindrApp() {
                                 src={filePreview}
                                 alt="Preview"
                                 fill
+                                unoptimized
                                 className="object-cover"
                               />
                             </div>
@@ -940,7 +985,7 @@ export default function FindrApp() {
                       return (
                         <div
                           key={report.id}
-                          className="flex flex-col justify-between rounded-2xl border border-zinc-800/90 bg-[#151128] p-5 shadow-lg transition hover:border-violet-500/40 hover:bg-[#18132e]"
+                          className="group flex flex-col justify-between rounded-2xl border border-zinc-800/80 bg-[#140f28]/90 p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#181232] hover:shadow-2xl hover:shadow-purple-950/60"
                         >
                           <div>
                             {/* Card Top Pill */}
@@ -960,16 +1005,24 @@ export default function FindrApp() {
                             </div>
 
                             {/* Image thumbnail if available */}
-                            {report.image_path && (
-                              <div className="relative mb-3 h-40 w-full overflow-hidden rounded-xl border border-zinc-800 bg-[#0d0a1b]">
-                                <Image
-                                  src={report.image_path}
-                                  alt={report.title}
-                                  fill
-                                  className="object-cover transition-transform hover:scale-105 duration-300"
-                                />
-                              </div>
-                            )}
+                            {report.image_path && (() => {
+                              const resolvedUrl = formatImageUrl(report.image_path);
+                              if (!resolvedUrl) return null;
+                              return (
+                                <div className="relative mb-3 h-40 w-full overflow-hidden rounded-xl border border-zinc-800 bg-[#0d0a1b]">
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img
+                                    src={resolvedUrl}
+                                    alt={report.title}
+                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    onError={(e) => {
+                                      const container = e.currentTarget.parentElement;
+                                      if (container) container.style.display = "none";
+                                    }}
+                                  />
+                                </div>
+                              );
+                            })()}
 
                             <h3 className="text-base font-bold text-white">{report.title}</h3>
                             <p className="mt-1 text-xs text-zinc-400 line-clamp-2 leading-relaxed">
@@ -1001,7 +1054,7 @@ export default function FindrApp() {
                                   setSelectedReportForClaim(report);
                                   setClaimModalOpen(true);
                                 }}
-                                className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-violet-600/30 border border-violet-500/40 py-2 text-xs font-semibold text-violet-200 hover:bg-violet-600 hover:text-white transition"
+                                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600/30 to-purple-600/30 border border-violet-500/40 py-2.5 text-xs font-semibold text-violet-200 hover:from-violet-600 hover:to-purple-600 hover:text-white transition-all duration-200 shadow-md hover:shadow-violet-900/40 active:scale-[0.98]"
                               >
                                 <Sparkles className="h-3.5 w-3.5" />
                                 <span>This Might Be Mine</span>
@@ -1145,25 +1198,25 @@ export default function FindrApp() {
             {activeTab === "staff-dashboard" && (
               <div className="space-y-6">
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5 card-interactive cursor-default">
                     <span className="text-xs text-zinc-400">Total Lost Reports</span>
                     <p className="mt-1 text-2xl font-bold text-white">
                       {reports.filter((r) => r.type === "lost").length}
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5 card-interactive cursor-default">
                     <span className="text-xs text-zinc-400">Total Found Reports</span>
                     <p className="mt-1 text-2xl font-bold text-white">
                       {reports.filter((r) => r.type === "found").length}
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5 card-interactive cursor-default">
                     <span className="text-xs text-amber-400">Pending AI Matches</span>
                     <p className="mt-1 text-2xl font-bold text-amber-300">
                       {matches.filter((m) => m.status === "pending").length}
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-5 card-interactive cursor-default">
                     <span className="text-xs text-emerald-400">Confirmed Reunions</span>
                     <p className="mt-1 text-2xl font-bold text-emerald-300">
                       {matches.filter((m) => m.status === "confirmed").length}
@@ -1306,8 +1359,8 @@ export default function FindrApp() {
                             </span>
                           </div>
 
-                          {/* 65-25-10 Breakdown Pills */}
-                          <div className="grid grid-cols-3 gap-3 rounded-2xl border border-zinc-800 bg-[#0e0a1c] p-3 text-center">
+                          {/* 65-25-10 Breakdown Pills with Animated Meters */}
+                          <div className="grid grid-cols-3 gap-3 rounded-2xl border border-zinc-800 bg-[#0e0a1c] p-3.5 text-center">
                             <div>
                               <span className="text-[10px] text-zinc-400 block font-semibold">
                                 65% Multimodal Vector
@@ -1315,6 +1368,12 @@ export default function FindrApp() {
                               <span className="text-sm font-bold text-violet-300 font-mono">
                                 {embPct}%
                               </span>
+                              <div className="mt-1.5 h-1 w-full rounded-full bg-zinc-800 overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-violet-600 to-purple-400 rounded-full"
+                                  style={{ width: `${typeof embPct === "number" ? embPct : 0}%` }}
+                                />
+                              </div>
                             </div>
                             <div>
                               <span className="text-[10px] text-zinc-400 block font-semibold">
@@ -1323,6 +1382,12 @@ export default function FindrApp() {
                               <span className="text-sm font-bold text-purple-300 font-mono">
                                 {attrPct}%
                               </span>
+                              <div className="mt-1.5 h-1 w-full rounded-full bg-zinc-800 overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-purple-600 to-pink-400 rounded-full"
+                                  style={{ width: `${typeof attrPct === "number" ? attrPct : 0}%` }}
+                                />
+                              </div>
                             </div>
                             <div>
                               <span className="text-[10px] text-zinc-400 block font-semibold">
@@ -1331,6 +1396,12 @@ export default function FindrApp() {
                               <span className="text-sm font-bold text-indigo-300 font-mono">
                                 {locPct}%
                               </span>
+                              <div className="mt-1.5 h-1 w-full rounded-full bg-zinc-800 overflow-hidden">
+                                <div
+                                  className="h-full bg-gradient-to-r from-indigo-600 to-teal-400 rounded-full"
+                                  style={{ width: `${typeof locPct === "number" ? locPct : 0}%` }}
+                                />
+                              </div>
                             </div>
                           </div>
 

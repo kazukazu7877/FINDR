@@ -71,7 +71,7 @@ export function HowItWorksSection() {
             return (
               <div
                 key={s.num}
-                className="relative flex flex-col justify-between rounded-2xl border border-zinc-800 bg-[#161224] p-5 shadow-lg transition hover:border-violet-500/50 hover:bg-[#1a152d]"
+                className="group relative flex flex-col justify-between rounded-2xl border border-zinc-800/80 bg-[#151026]/90 p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#1a1430] hover:shadow-xl hover:shadow-purple-950/50"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
