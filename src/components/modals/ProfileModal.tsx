@@ -90,22 +90,22 @@ export function ProfileModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-md rounded-3xl border border-violet-500/30 bg-[#151128] p-6 sm:p-8 shadow-2xl shadow-purple-950/80">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-md rounded-3xl border border-violet-500/30 bg-[#151128] p-4 sm:p-6 md:p-8 shadow-2xl shadow-purple-950/80 max-h-[92vh] overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 rounded-full p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition"
+          className="absolute right-4 top-4 sm:right-5 sm:top-5 rounded-full p-2 text-zinc-400 hover:bg-zinc-800 hover:text-white transition min-h-[36px] min-w-[36px] flex items-center justify-center"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
         </button>
 
-        <div className="text-center">
+        <div className="text-center pt-1">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white shadow-lg">
             <User className="h-6 w-6" />
           </div>
-          <h2 className="mt-3 text-lg font-bold text-white">My Academic Profile</h2>
-          <p className="mt-1 text-xs text-zinc-400">
+          <h2 className="mt-3 text-lg sm:text-xl font-bold text-white">My Academic Profile</h2>
+          <p className="mt-1 text-xs text-zinc-300">
             Keep your campus details verified for accurate lost-and-found returns.
           </p>
         </div>
@@ -116,7 +116,7 @@ export function ProfileModal({
             <p className="text-sm font-semibold text-white">Profile Successfully Updated!</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-5 sm:mt-6 space-y-4">
             {error && (
               <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-950/30 p-3 text-xs text-red-300">
                 <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
@@ -131,7 +131,7 @@ export function ProfileModal({
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
               />
             </div>
 
@@ -141,7 +141,7 @@ export function ProfileModal({
                 type="email"
                 disabled
                 value={currentUser.email}
-                className="w-full rounded-xl border border-zinc-800/50 bg-[#0b0817] px-3 py-2 text-xs text-zinc-500 cursor-not-allowed"
+                className="w-full rounded-xl border border-zinc-800/50 bg-[#0b0817] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-zinc-400 cursor-not-allowed min-h-[44px] sm:min-h-[38px]"
               />
             </div>
 
@@ -152,17 +152,17 @@ export function ProfileModal({
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-medium text-zinc-300 mb-1">Academic Year</label>
                 <select
                   value={academicYear}
                   onChange={(e) => setAcademicYear(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                  className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                 >
                   {ACADEMIC_YEARS.map((y) => (
                     <option key={y} value={y} className="bg-[#120d24]">
@@ -177,7 +177,7 @@ export function ProfileModal({
                 <select
                   value={section}
                   onChange={(e) => setSection(e.target.value)}
-                  className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                  className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                 >
                   {SECTIONS.map((s) => (
                     <option key={s} value={s} className="bg-[#120d24]">
@@ -193,7 +193,7 @@ export function ProfileModal({
               <select
                 value={branch}
                 onChange={(e) => setBranch(e.target.value)}
-                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
               >
                 {BRANCHES.map((b) => (
                   <option key={b} value={b} className="bg-[#120d24]">
@@ -203,18 +203,18 @@ export function ProfileModal({
               </select>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-3">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-3">
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl px-4 py-2 text-xs font-semibold text-zinc-400 hover:text-white transition"
+                className="flex items-center justify-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-semibold text-zinc-400 hover:text-white transition min-h-[44px] sm:min-h-[38px]"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2 text-xs font-semibold text-white shadow-lg hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50"
+                className="flex items-center justify-center rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 sm:py-2 text-xs font-semibold text-white shadow-lg hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50 min-h-[44px] sm:min-h-[38px]"
               >
                 {loading ? "Saving..." : "Save Changes"}
               </button>

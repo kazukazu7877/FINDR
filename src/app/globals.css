@@ -371,6 +371,29 @@ select:focus {
   box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2), 0 0 12px -2px rgba(139, 92, 246, 0.15) !important;
 }
 
+/* Prevent iOS auto-zoom on mobile inputs while keeping text crisp and legible */
+@media (max-width: 640px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Hide scrollbars for clean mobile horizontal pill navigation */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .findr-label {
   color: var(--text-secondary) !important;
   font-weight: 500 !important;

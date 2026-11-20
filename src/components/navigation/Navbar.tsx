@@ -327,7 +327,7 @@ export function Navbar({
 
                 {/* Notifications Dropdown Drawer */}
                 {notifOpen && (
-                  <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-violet-500/30 bg-[#17122b] p-4 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
+                  <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-sm rounded-2xl border border-violet-500/30 bg-[#17122b] p-4 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
                     <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-3">
                       <div className="flex items-center gap-2">
                         <Bell className="h-4 w-4 text-violet-400" />
@@ -390,7 +390,7 @@ export function Navbar({
 
                 {/* Dropdown Menu */}
                 {profileOpen && (
-                  <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
+                  <div className="absolute right-0 mt-2 w-[calc(100vw-2rem)] sm:w-64 max-w-xs rounded-2xl border border-violet-500/30 bg-[#17122b] p-2 shadow-2xl shadow-purple-950/80 z-50 animate-fade-in-up">
                     <div className="px-3 py-2 border-b border-zinc-800 mb-1">
                       <p className="text-sm font-semibold text-white">{displayName}</p>
                       <p className="text-xs text-zinc-400 truncate">{currentUser.email}</p>
@@ -488,7 +488,7 @@ export function Navbar({
 
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-zinc-800 bg-[#120d24]/95 backdrop-blur-md px-4 py-3 space-y-1 animate-fade-in-up shadow-2xl">
+        <div className="lg:hidden border-t border-zinc-800 bg-[#120d24]/98 backdrop-blur-xl px-4 py-3.5 space-y-1.5 animate-fade-in-up shadow-2xl">
           {currentUser && activeTab !== "home" ? (
             mode === "user" ? (
               <>
@@ -497,10 +497,10 @@ export function Navbar({
                     onNavigateTab("dashboard");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center transition ${
                     activeTab === "dashboard"
                       ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   Dashboard
@@ -510,10 +510,10 @@ export function Navbar({
                     onNavigateTab("browse");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center transition ${
                     activeTab === "browse"
                       ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   Browse Reports
@@ -523,10 +523,10 @@ export function Navbar({
                     onNavigateTab("my-reports");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center transition ${
                     activeTab === "my-reports"
                       ? "bg-violet-600/30 text-violet-200 border border-violet-500/30"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   My Reports & Tracker
@@ -539,10 +539,10 @@ export function Navbar({
                     onNavigateTab("staff-dashboard");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center justify-between transition ${
                     activeTab === "staff-dashboard"
                       ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   <span>Staff Overview</span>
@@ -552,15 +552,15 @@ export function Navbar({
                     onNavigateTab("staff-matches");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center justify-between transition ${
                     activeTab === "staff-matches"
                       ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   <span>AI Match Review</span>
                   {pendingMatchesCount > 0 && (
-                    <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-200 border border-amber-500/40">
+                    <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[11px] font-bold text-amber-200 border border-amber-500/40">
                       {pendingMatchesCount}
                     </span>
                   )}
@@ -570,15 +570,15 @@ export function Navbar({
                     onNavigateTab("staff-claims");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center justify-between transition ${
                     activeTab === "staff-claims"
                       ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   <span>Ownership Claims</span>
                   {pendingClaimsCount > 0 && (
-                    <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-200 border border-amber-500/40">
+                    <span className="rounded-full bg-amber-500/30 px-2 py-0.5 text-[11px] font-bold text-amber-200 border border-amber-500/40">
                       {pendingClaimsCount}
                     </span>
                   )}
@@ -588,10 +588,10 @@ export function Navbar({
                     onNavigateTab("staff-manual");
                     setMobileMenuOpen(false);
                   }}
-                  className={`w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium transition flex items-center justify-between ${
+                  className={`w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] flex items-center justify-between transition ${
                     activeTab === "staff-manual"
                       ? "bg-amber-500/20 text-amber-200 border border-amber-500/40 font-semibold"
-                      : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white"
+                      : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white"
                   }`}
                 >
                   <span>Manual Matching</span>
@@ -603,10 +603,10 @@ export function Navbar({
               <a
                 href="#home"
                 onClick={(e) => handleSmoothNav("home", e)}
-                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                className={`block w-full text-left rounded-xl px-4 py-3 text-sm min-h-[44px] flex items-center transition ${
                   activeSection === "home"
                     ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
-                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                    : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white font-medium"
                 }`}
               >
                 Home
@@ -614,10 +614,10 @@ export function Navbar({
               <a
                 href="#how-it-works"
                 onClick={(e) => handleSmoothNav("how-it-works", e)}
-                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                className={`block w-full text-left rounded-xl px-4 py-3 text-sm min-h-[44px] flex items-center transition ${
                   activeSection === "how-it-works"
                     ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
-                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                    : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white font-medium"
                 }`}
               >
                 How It Works
@@ -625,10 +625,10 @@ export function Navbar({
               <a
                 href="#why-findr"
                 onClick={(e) => handleSmoothNav("why-findr", e)}
-                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                className={`block w-full text-left rounded-xl px-4 py-3 text-sm min-h-[44px] flex items-center transition ${
                   activeSection === "why-findr"
                     ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
-                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                    : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white font-medium"
                 }`}
               >
                 Why FINDR
@@ -636,10 +636,10 @@ export function Navbar({
               <a
                 href="#faqs"
                 onClick={(e) => handleSmoothNav("faqs", e)}
-                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                className={`block w-full text-left rounded-xl px-4 py-3 text-sm min-h-[44px] flex items-center transition ${
                   activeSection === "faqs"
                     ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
-                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                    : "text-zinc-200 hover:bg-zinc-800/40 hover:text-white font-medium"
                 }`}
               >
                 FAQs
@@ -650,10 +650,10 @@ export function Navbar({
                     onNavigateTab(mode === "staff" ? "staff-dashboard" : "dashboard");
                     setMobileMenuOpen(false);
                   }}
-                  className="w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-violet-300 hover:bg-violet-950/40 hover:text-white transition flex items-center justify-between"
+                  className="w-full text-left rounded-xl px-4 py-3 text-sm font-medium min-h-[44px] text-violet-300 hover:bg-violet-950/40 hover:text-white transition flex items-center justify-between"
                 >
                   <span>Go to Workspace</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               )}
             </>

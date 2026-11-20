@@ -476,29 +476,29 @@ export default function FindrApp() {
             {activeTab === "dashboard" && (
               <div className="space-y-8 animate-fadeIn">
                 {/* Welcome Hero Banner */}
-                <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-r from-[#17122e] via-[#1a1435] to-[#130f26] p-6 sm:p-8 shadow-xl">
+                <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-r from-[#17122e] via-[#1a1435] to-[#130f26] p-4 sm:p-6 md:p-8 shadow-xl">
                   <div className="max-w-2xl">
                     <span className="rounded-full bg-violet-500/20 px-3 py-1 text-xs font-semibold text-violet-300 border border-violet-500/30">
                       Campus Student Portal
                     </span>
-                    <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
+                    <h2 className="mt-3 text-xl sm:text-2xl md:text-3xl font-bold text-white">
                       Welcome back, {currentUser.full_name || currentUser.name || "User"}!
                     </h2>
-                    <p className="mt-2 text-sm text-zinc-300 leading-relaxed">
+                    <p className="mt-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
                       Lost an item or found someone&apos;s belonging? Use the quick actions below.
                       FINDR&apos;s 65–25–10 AI engine monitors reports 24/7 with human staff supervision.
                     </p>
                   </div>
 
                   {/* Dual Prominent Actions */}
-                  <div className="mt-6 flex flex-wrap gap-4">
+                  <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                     <button
                       onClick={() => {
                         resetReportForm();
                         setFormType("lost");
                         setActiveTab("report-lost");
                       }}
-                      className="flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-rose-950/40 hover:from-red-500 hover:to-pink-500 transition"
+                      className="flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-rose-950/40 hover:from-red-500 hover:to-pink-500 transition min-h-[46px] w-full sm:w-auto"
                     >
                       <PlusCircle className="h-5 w-5" />
                       <span>Report a Lost Item</span>
@@ -510,7 +510,7 @@ export default function FindrApp() {
                         setFormType("found");
                         setActiveTab("report-found");
                       }}
-                      className="flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-green-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-teal-950/40 hover:from-emerald-500 hover:to-teal-500 transition"
+                      className="flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-green-600 px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-teal-950/40 hover:from-emerald-500 hover:to-teal-500 transition min-h-[46px] w-full sm:w-auto"
                     >
                       <PlusCircle className="h-5 w-5" />
                       <span>Report a Found Item</span>
@@ -518,7 +518,7 @@ export default function FindrApp() {
 
                     <button
                       onClick={() => setActiveTab("browse")}
-                      className="flex items-center gap-2 rounded-2xl border border-violet-500/40 bg-violet-950/30 px-5 py-3.5 text-sm font-semibold text-violet-200 hover:bg-violet-900/40 transition"
+                      className="flex items-center justify-center gap-2 rounded-2xl border border-violet-500/40 bg-violet-950/30 px-5 py-3.5 text-sm font-semibold text-violet-200 hover:bg-violet-900/40 transition min-h-[46px] w-full sm:w-auto"
                     >
                       <Search className="h-4 w-4" />
                       <span>Browse Campus Reports</span>
@@ -527,28 +527,28 @@ export default function FindrApp() {
                 </div>
 
                 {/* Dashboard Metrics */}
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
-                    <span className="text-xs text-zinc-400 font-medium">My Active Reports</span>
-                    <p className="mt-1 text-2xl font-bold text-white">{myReports.length}</p>
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-3.5 sm:p-4 card-interactive cursor-default">
+                    <span className="text-xs text-zinc-300 font-medium">My Active Reports</span>
+                    <p className="mt-1 text-xl sm:text-2xl font-bold text-white">{myReports.length}</p>
                     <span className="text-[11px] text-violet-400 mt-1 block">Live in system</span>
                   </div>
 
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
-                    <span className="text-xs text-zinc-400 font-medium">My Active Claims</span>
-                    <p className="mt-1 text-2xl font-bold text-white">{claims.length}</p>
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-3.5 sm:p-4 card-interactive cursor-default">
+                    <span className="text-xs text-zinc-300 font-medium">My Active Claims</span>
+                    <p className="mt-1 text-xl sm:text-2xl font-bold text-white">{claims.length}</p>
                     <span className="text-[11px] text-amber-400 mt-1 block">Under staff review</span>
                   </div>
 
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
-                    <span className="text-xs text-zinc-400 font-medium">Campus Reports</span>
-                    <p className="mt-1 text-2xl font-bold text-white">{reports.length}</p>
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-3.5 sm:p-4 card-interactive cursor-default">
+                    <span className="text-xs text-zinc-300 font-medium">Campus Reports</span>
+                    <p className="mt-1 text-xl sm:text-2xl font-bold text-white">{reports.length}</p>
                     <span className="text-[11px] text-emerald-400 mt-1 block">Total indexed</span>
                   </div>
 
-                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 card-interactive cursor-default">
-                    <span className="text-xs text-zinc-400 font-medium">AI Matches Flagged</span>
-                    <p className="mt-1 text-2xl font-bold text-white">{matches.length}</p>
+                  <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-3.5 sm:p-4 card-interactive cursor-default">
+                    <span className="text-xs text-zinc-300 font-medium">AI Matches Flagged</span>
+                    <p className="mt-1 text-xl sm:text-2xl font-bold text-white">{matches.length}</p>
                     <span className="text-[11px] text-purple-400 mt-1 block">Supervised pairings</span>
                   </div>
                 </div>
@@ -618,7 +618,7 @@ export default function FindrApp() {
                   ← Back to Dashboard
                 </button>
 
-                <div className="rounded-3xl border border-violet-500/30 bg-[#151128] p-6 sm:p-8 shadow-2xl">
+                <div className="rounded-3xl border border-violet-500/30 bg-[#151128] p-4 sm:p-6 md:p-8 shadow-2xl">
                   {/* Form Title & Context */}
                   <div className="border-b border-zinc-800 pb-4 mb-6">
                     <span
@@ -630,12 +630,12 @@ export default function FindrApp() {
                     >
                       {formType === "lost" ? "Report Lost Item" : "Report Found Item"}
                     </span>
-                    <h2 className="mt-2 text-2xl font-bold text-white">
+                    <h2 className="mt-2 text-xl sm:text-2xl font-bold text-white">
                       {formType === "lost"
                         ? "What did you lose on campus?"
                         : "What item did you find?"}
                     </h2>
-                    <p className="mt-1 text-xs text-zinc-400">
+                    <p className="mt-1 text-xs text-zinc-300">
                       {formType === "lost"
                         ? "Provide details to help FINDR AI and campus staff identify your item."
                         : "Thank you for helping reunite a belonging! Details will be displayed safely."}
@@ -726,7 +726,7 @@ export default function FindrApp() {
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
                           placeholder="e.g. Blue Hydro Flask Water Bottle, HP Spectre Laptop..."
-                          className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                          className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                         />
                       </div>
 
@@ -739,7 +739,7 @@ export default function FindrApp() {
                           <select
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white focus:border-violet-500 focus:outline-none"
+                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                           >
                             {CATEGORIES.filter((c) => c !== "All").map((cat) => (
                               <option key={cat} value={cat} className="bg-[#141026]">
@@ -759,7 +759,7 @@ export default function FindrApp() {
                             value={location}
                             onChange={(e) => setLocation(e.target.value)}
                             placeholder="Enter the location where you lost/found the item"
-                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                           />
                         </div>
                       </div>
@@ -775,12 +775,12 @@ export default function FindrApp() {
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           placeholder="Describe color, size, condition, and any contextual info..."
-                          className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] p-3 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                          className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] p-3 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none leading-relaxed"
                         />
                       </div>
 
                       {/* Brand & Color */}
-                      <div className="grid grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         <div>
                           <label className="block text-xs font-medium text-zinc-300 mb-1">Brand (Optional)</label>
                           <input
@@ -788,7 +788,7 @@ export default function FindrApp() {
                             value={brand}
                             onChange={(e) => setBrand(e.target.value)}
                             placeholder="e.g. Apple, Nike, Casio"
-                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                           />
                         </div>
                         <div>
@@ -798,7 +798,7 @@ export default function FindrApp() {
                             value={color}
                             onChange={(e) => setColor(e.target.value)}
                             placeholder="e.g. Matte Black, Navy Blue"
-                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                            className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                           />
                         </div>
                       </div>
@@ -824,7 +824,7 @@ export default function FindrApp() {
                             value={distinctiveSecret}
                             onChange={(e) => setDistinctiveSecret(e.target.value)}
                             placeholder="e.g. Scratch near charging port, small Totoro sticker on bottom right"
-                            className="w-full rounded-xl border border-violet-500/40 bg-[#0d091b] px-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-400 focus:outline-none"
+                            className="w-full rounded-xl border border-violet-500/40 bg-[#0d091b] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-400 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                           />
                         </div>
                       )}
@@ -874,18 +874,18 @@ export default function FindrApp() {
                       </div>
 
                       {/* Submit CTA */}
-                      <div className="flex items-center justify-end gap-3 pt-2">
+                      <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
                         <button
                           type="button"
                           onClick={() => setActiveTab("dashboard")}
-                          className="rounded-xl px-4 py-2 text-xs font-semibold text-zinc-400 hover:text-white transition"
+                          className="flex items-center justify-center rounded-xl px-4 py-2.5 text-xs font-semibold text-zinc-400 hover:text-white transition min-h-[44px] sm:min-h-[38px]"
                         >
                           Cancel
                         </button>
                         <button
                           type="submit"
                           disabled={submitting}
-                          className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-6 py-2.5 text-xs font-bold text-white shadow-lg hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50"
+                          className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-6 py-3 text-xs font-bold text-white shadow-lg hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50 min-h-[46px] sm:min-h-[40px]"
                         >
                           {submitting ? "Analyzing & Recording..." : "Submit Report"}
                           <ArrowRight className="h-4 w-4" />
@@ -901,68 +901,70 @@ export default function FindrApp() {
             {activeTab === "browse" && (
               <div className="space-y-6 animate-fadeIn">
                 <div>
-                  <h2 className="text-2xl font-bold text-white">Browse Campus Reports</h2>
+                  <h2 className="text-xl sm:text-2xl font-bold text-white">Browse Campus Reports</h2>
                   <p className="text-xs text-zinc-400 mt-1">
                     Inspect active lost and found reports. Personal contact information remains strictly protected.
                   </p>
                 </div>
 
                 {/* Filter Controls Bar */}
-                <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-4 space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="rounded-2xl border border-zinc-800 bg-[#141026] p-3 sm:p-4 space-y-3">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
                     {/* Search Bar */}
-                    <div className="relative flex-1 min-w-[240px]">
+                    <div className="relative flex-1 min-w-[200px]">
                       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search item name, brand, or keywords..."
-                        className="w-full rounded-xl border border-zinc-800 bg-[#0d091b] pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                        className="w-full rounded-xl border border-zinc-800 bg-[#0d091b] pl-9 pr-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                       />
                     </div>
 
-                    {/* Type Toggle Pills */}
-                    <div className="flex rounded-xl border border-zinc-800 bg-[#0d091b] p-1">
-                      {(["all", "lost", "found"] as const).map((t) => (
-                        <button
-                          key={t}
-                          onClick={() => setBrowseTypeFilter(t)}
-                          className={`rounded-lg px-3 py-1 text-xs font-semibold capitalize transition ${
-                            browseTypeFilter === t
-                              ? "bg-violet-600 text-white shadow-sm"
-                              : "text-zinc-400 hover:text-white"
-                          }`}
-                        >
-                          {t === "all" ? "All Items" : t}
-                        </button>
-                      ))}
-                    </div>
+                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5">
+                      {/* Type Toggle Pills */}
+                      <div className="flex rounded-xl border border-zinc-800 bg-[#0d091b] p-1 flex-1 sm:flex-initial">
+                        {(["all", "lost", "found"] as const).map((t) => (
+                          <button
+                            key={t}
+                            onClick={() => setBrowseTypeFilter(t)}
+                            className={`flex-1 sm:flex-initial rounded-lg px-3 py-1.5 text-xs font-semibold capitalize transition min-h-[36px] flex items-center justify-center ${
+                              browseTypeFilter === t
+                                ? "bg-violet-600 text-white shadow-sm"
+                                : "text-zinc-400 hover:text-white"
+                            }`}
+                          >
+                            {t === "all" ? "All Items" : t}
+                          </button>
+                        ))}
+                      </div>
 
-                    {/* Location Dropdown */}
-                    <select
-                      value={browseLocationFilter}
-                      onChange={(e) => setBrowseLocationFilter(e.target.value)}
-                      className="rounded-xl border border-zinc-800 bg-[#0d091b] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
-                    >
-                      {CAMPUS_LOCATIONS.map((loc) => (
-                        <option key={loc} value={loc} className="bg-[#141026]">
-                          {loc}
-                        </option>
-                      ))}
-                    </select>
+                      {/* Location Dropdown */}
+                      <select
+                        value={browseLocationFilter}
+                        onChange={(e) => setBrowseLocationFilter(e.target.value)}
+                        className="rounded-xl border border-zinc-800 bg-[#0d091b] px-3 py-2 sm:py-1.5 text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px] w-full sm:w-auto"
+                      >
+                        {CAMPUS_LOCATIONS.map((loc) => (
+                          <option key={loc} value={loc} className="bg-[#141026]">
+                            {loc}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
-                  {/* Category Pills */}
-                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-zinc-800/80">
+                  {/* Category Pills - Touch swipeable horizontal rail on mobile */}
+                  <div className="flex gap-2 overflow-x-auto no-scrollbar flex-nowrap py-1 border-t border-zinc-800/80 -mx-1 px-1">
                     {CATEGORIES.map((cat) => (
                       <button
                         key={cat}
                         onClick={() => setBrowseCategoryFilter(cat)}
-                        className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition ${
+                        className={`shrink-0 rounded-lg px-3 py-1.5 text-xs sm:text-[11px] font-medium transition min-h-[36px] flex items-center whitespace-nowrap ${
                           browseCategoryFilter === cat
                             ? "bg-violet-600/30 text-violet-200 border border-violet-500/40"
-                            : "bg-[#0e0a1e] text-zinc-400 hover:text-white"
+                            : "bg-[#0e0a1e] text-zinc-400 hover:text-white border border-transparent"
                         }`}
                       >
                         {cat}
@@ -1057,14 +1059,14 @@ export default function FindrApp() {
                                   setSelectedReportForClaim(report);
                                   setClaimModalOpen(true);
                                 }}
-                                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600/30 to-purple-600/30 border border-violet-500/40 py-2.5 text-xs font-semibold text-violet-200 hover:from-violet-600 hover:to-purple-600 hover:text-white transition-all duration-200 shadow-md hover:shadow-violet-900/40 active:scale-[0.98]"
+                                className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600/30 to-purple-600/30 border border-violet-500/40 py-3 sm:py-2.5 text-xs font-semibold text-violet-200 hover:from-violet-600 hover:to-purple-600 hover:text-white transition-all duration-200 shadow-md hover:shadow-violet-900/40 active:scale-[0.98] min-h-[44px] sm:min-h-[38px]"
                               >
-                                <Sparkles className="h-3.5 w-3.5" />
+                                <Sparkles className="h-4 w-4" />
                                 <span>This Might Be Mine</span>
                               </button>
                             ) : (
-                              <div className="flex items-center justify-between text-[11px] text-zinc-500">
-                                <span>Status: {report.status}</span>
+                              <div className="flex items-center justify-between text-[11px] text-zinc-400 py-1">
+                                <span>Status: <strong className="text-zinc-300 font-semibold">{report.status}</strong></span>
                                 <span>🔒 Contact Protected</span>
                               </div>
                             )}
@@ -1080,21 +1082,21 @@ export default function FindrApp() {
             {/* ------------------- MY REPORTS & STATUS TRACKER ------------------- */}
             {activeTab === "my-reports" && (
               <div className="space-y-6 animate-fadeIn">
-                <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <h2 className="text-2xl font-bold text-white">My Reports & Progress Tracking</h2>
-                    <p className="text-xs text-zinc-400 mt-1">
+                    <h2 className="text-xl sm:text-2xl font-bold text-white">My Reports & Progress Tracking</h2>
+                    <p className="text-xs text-zinc-300 mt-1">
                       Monitor your submissions, view AI candidates, and track supervisor verification milestones.
                     </p>
                   </div>
-                  <div className="flex gap-2">
+                  <div>
                     <button
                       onClick={() => {
                         resetReportForm();
                         setFormType("lost");
                         setActiveTab("report-lost");
                       }}
-                      className="rounded-xl bg-violet-600 px-4 py-2 text-xs font-semibold text-white hover:bg-violet-500 transition"
+                      className="w-full sm:w-auto flex items-center justify-center rounded-xl bg-violet-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-violet-500 transition min-h-[44px] sm:min-h-[38px]"
                     >
                       + New Lost Report
                     </button>
@@ -1363,7 +1365,7 @@ export default function FindrApp() {
                           </div>
 
                           {/* 65-25-10 Breakdown Pills with Animated Meters */}
-                          <div className="grid grid-cols-3 gap-3 rounded-2xl border border-zinc-800 bg-[#0e0a1c] p-3.5 text-center">
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 rounded-2xl border border-zinc-800 bg-[#0e0a1c] p-3.5 text-center">
                             <div>
                               <span className="text-[10px] text-zinc-400 block font-semibold">
                                 65% Multimodal Vector
@@ -1456,10 +1458,10 @@ export default function FindrApp() {
 
                           {/* Staff Decision Actions */}
                           {m.status === "pending" && (
-                            <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-2">
                               <button
                                 onClick={() => handleMatchAction(m.id, "dismiss", "Candidate rejected by staff")}
-                                className="rounded-xl border border-red-500/40 bg-red-950/20 px-4 py-2 text-xs font-semibold text-red-300 hover:bg-red-900/40 transition"
+                                className="flex items-center justify-center rounded-xl border border-red-500/40 bg-red-950/20 px-4 py-2.5 text-xs font-semibold text-red-300 hover:bg-red-900/40 transition min-h-[42px] sm:min-h-[38px]"
                               >
                                 Reject Candidate
                               </button>
@@ -1471,7 +1473,7 @@ export default function FindrApp() {
                                     "Approved for student confirmation"
                                   )
                                 }
-                                className="rounded-xl bg-violet-600 px-5 py-2 text-xs font-semibold text-white hover:bg-violet-500 shadow-md transition"
+                                className="flex items-center justify-center rounded-xl bg-violet-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-violet-500 shadow-md transition min-h-[42px] sm:min-h-[38px]"
                               >
                                 Approve for Student Confirmation
                               </button>
@@ -1483,7 +1485,7 @@ export default function FindrApp() {
                                     "Direct staff verification and disclosure authorization"
                                   )
                                 }
-                                className="rounded-xl bg-emerald-600 px-5 py-2 text-xs font-semibold text-white hover:bg-emerald-500 shadow-md transition"
+                                className="flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-emerald-500 shadow-md transition min-h-[42px] sm:min-h-[38px]"
                               >
                                 Finalize & Unlock Contact
                               </button>
@@ -1575,22 +1577,22 @@ export default function FindrApp() {
 
                         {/* Actions */}
                         {c.status === "pending" && (
-                          <div className="flex flex-wrap items-center justify-end gap-3 pt-2">
+                          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 sm:gap-3 pt-2">
                             <button
                               onClick={() => handleClaimAction(c.id, "rejected", "Evidence provided does not match item")}
-                              className="rounded-xl border border-red-500/40 bg-red-950/20 px-4 py-2 text-xs font-semibold text-red-300 hover:bg-red-900/40 transition"
+                              className="flex items-center justify-center rounded-xl border border-red-500/40 bg-red-950/20 px-4 py-2.5 text-xs font-semibold text-red-300 hover:bg-red-900/40 transition min-h-[42px] sm:min-h-[38px]"
                             >
                               Reject Claim
                             </button>
                             <button
                               onClick={() => handleClaimAction(c.id, "more_info_needed", "Please specify distinctive marks")}
-                              className="rounded-xl border border-amber-500/40 bg-amber-950/20 px-4 py-2 text-xs font-semibold text-amber-300 hover:bg-amber-900/40 transition"
+                              className="flex items-center justify-center rounded-xl border border-amber-500/40 bg-amber-950/20 px-4 py-2.5 text-xs font-semibold text-amber-300 hover:bg-amber-900/40 transition min-h-[42px] sm:min-h-[38px]"
                             >
                               Request More Info
                             </button>
                             <button
                               onClick={() => handleClaimAction(c.id, "approved", "Ownership verified by staff supervisor")}
-                              className="rounded-xl bg-emerald-600 px-5 py-2 text-xs font-semibold text-white hover:bg-emerald-500 shadow-md transition"
+                              className="flex items-center justify-center rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-semibold text-white hover:bg-emerald-500 shadow-md transition min-h-[42px] sm:min-h-[38px]"
                             >
                               Approve Ownership & Unlock Contact
                             </button>
@@ -1613,7 +1615,7 @@ export default function FindrApp() {
                   </p>
                 </div>
 
-                <div className="rounded-3xl border border-violet-500/30 bg-[#151128] p-6 sm:p-8 shadow-xl">
+                <div className="rounded-3xl border border-violet-500/30 bg-[#151128] p-4 sm:p-6 md:p-8 shadow-xl">
                   {manualSuccess && (
                     <div className="mb-4 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-950/30 p-3.5 text-xs text-emerald-300">
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
@@ -1630,7 +1632,7 @@ export default function FindrApp() {
                         value={manualLostId || ""}
                         onChange={(e) => setManualLostId(Number(e.target.value) || null)}
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white focus:border-violet-500 focus:outline-none"
+                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                       >
                         <option value="">-- Choose Lost Report --</option>
                         {reports
@@ -1651,7 +1653,7 @@ export default function FindrApp() {
                         value={manualFoundId || ""}
                         onChange={(e) => setManualFoundId(Number(e.target.value) || null)}
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-xs text-white focus:border-violet-500 focus:outline-none"
+                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] px-3.5 py-2.5 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                       >
                         <option value="">-- Choose Found Report --</option>
                         {reports
@@ -1674,7 +1676,7 @@ export default function FindrApp() {
                         value={manualReason}
                         onChange={(e) => setManualReason(e.target.value)}
                         placeholder="Explain why these two reports are related..."
-                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] p-3 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                        className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1e] p-3 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none leading-relaxed"
                       />
                     </div>
 
@@ -1682,7 +1684,7 @@ export default function FindrApp() {
                       <button
                         type="submit"
                         disabled={manualSubmitting || !manualLostId || !manualFoundId}
-                        className="rounded-xl bg-amber-500 px-5 py-2.5 text-xs font-bold text-black hover:bg-amber-400 transition disabled:opacity-50"
+                        className="w-full sm:w-auto rounded-xl bg-amber-500 px-6 py-3 sm:py-2.5 text-xs font-bold text-black hover:bg-amber-400 transition disabled:opacity-50 min-h-[44px] sm:min-h-[38px] flex items-center justify-center"
                       >
                         {manualSubmitting ? "Linking..." : "Create Manual Match"}
                       </button>

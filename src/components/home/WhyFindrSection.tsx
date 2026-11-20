@@ -45,34 +45,34 @@ export function WhyFindrSection() {
   ];
 
   return (
-    <section id="why-findr" className="w-full border-t border-[#231a40] bg-[#0d0a1a] py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
+    <section id="why-findr" className="w-full border-t border-[#231a40] bg-[#0d0a1a] py-14 sm:py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center max-w-3xl mx-auto">
           <span className="rounded-full border border-violet-500/30 bg-violet-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-300">
             Engineered for Campus Trust
           </span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-3 sm:mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
             Why University Campuses Need FINDR
           </h2>
-          <p className="mt-3 text-base text-zinc-400">
+          <p className="mt-2.5 sm:mt-3 text-sm sm:text-base text-zinc-300">
             A lost item isn&apos;t just an object—it&apos;s someone&apos;s dorm key, project laptop, or campus ID.
             We designed FINDR to make recovery fast, safe, and stress-free.
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {pillars.map((p) => {
             const Icon = p.icon;
             return (
               <div
                 key={p.title}
-                className="group rounded-2xl border border-zinc-800/80 bg-[#140f26]/90 p-6 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#181230] hover:shadow-xl hover:shadow-purple-950/50"
+                className="group rounded-2xl border border-zinc-800/80 bg-[#140f26]/90 p-4 sm:p-6 shadow-md backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#181230] hover:shadow-xl hover:shadow-purple-950/50"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-600/20 text-violet-300 border border-violet-500/30">
+                <div className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-xl bg-violet-600/20 text-violet-300 border border-violet-500/30">
                   <Icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 text-base font-semibold text-white">{p.title}</h3>
-                <p className="mt-2 text-xs leading-relaxed text-zinc-400">{p.desc}</p>
+                <h3 className="mt-3.5 sm:mt-4 text-base font-semibold text-white">{p.title}</h3>
+                <p className="mt-2 text-xs leading-relaxed text-zinc-300">{p.desc}</p>
               </div>
             );
           })}

@@ -80,11 +80,11 @@ export function ClaimModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-lg rounded-3xl border border-violet-500/30 bg-[#151128] p-6 sm:p-8 shadow-2xl shadow-purple-950/80 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-lg rounded-3xl border border-violet-500/30 bg-[#151128] p-4 sm:p-6 md:p-8 shadow-2xl shadow-purple-950/80 max-h-[92vh] overflow-y-auto">
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 rounded-full p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition"
+          className="absolute right-4 top-4 sm:right-5 sm:top-5 rounded-full p-2 text-zinc-400 hover:bg-zinc-800 hover:text-white transition min-h-[36px] min-w-[36px] flex items-center justify-center"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
@@ -96,10 +96,10 @@ export function ClaimModal({
             <span className="rounded bg-violet-500/20 px-2 py-0.5 font-mono text-[11px] font-semibold text-violet-300 border border-violet-500/30">
               Found Report #FNDR-F-{report.id.toString().padStart(4, "0")}
             </span>
-            <span className="text-xs text-zinc-400">{report.location}</span>
+            <span className="text-xs text-zinc-300">{report.location}</span>
           </div>
-          <h2 className="mt-2 text-xl font-bold text-white">This Might Be Mine</h2>
-          <p className="mt-1 text-xs text-zinc-400">
+          <h2 className="mt-2 text-lg sm:text-xl font-bold text-white">This Might Be Mine</h2>
+          <p className="mt-1 text-xs text-zinc-300">
             Submit your ownership verification for &ldquo;{report.title}&rdquo;.
           </p>
         </div>
@@ -143,7 +143,7 @@ export function ClaimModal({
                 value={claimReason}
                 onChange={(e) => setClaimReason(e.target.value)}
                 placeholder="e.g. I lost my blue Acer laptop charger on Monday in the 3rd floor library study pod."
-                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] p-3 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] p-3 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none leading-relaxed"
               />
             </div>
 
@@ -158,9 +158,9 @@ export function ClaimModal({
                 value={identifyingDetails}
                 onChange={(e) => setIdentifyingDetails(e.target.value)}
                 placeholder="Details only the true owner would know: e.g. stickers, initials on back, scratches, serial digits, keychain charm..."
-                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] p-3 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] p-3 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none leading-relaxed"
               />
-              <p className="mt-1 text-[10px] text-zinc-500">
+              <p className="mt-1 text-[10px] text-zinc-400">
                 Kept strictly private between you and the reviewing campus supervisor.
               </p>
             </div>
@@ -175,13 +175,13 @@ export function ClaimModal({
                 value={additionalEvidence}
                 onChange={(e) => setAdditionalEvidence(e.target.value)}
                 placeholder="e.g. purchase invoice date, serial number, lock code..."
-                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0e0a1d] px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
               />
             </div>
 
             {/* Claimant Identity Snapshot */}
             <div className="rounded-xl border border-zinc-800 bg-[#0f0b1f] p-3 text-xs text-zinc-400">
-              <span className="text-zinc-500 block text-[10px] uppercase font-bold tracking-wider mb-1">
+              <span className="text-zinc-400 block text-[10px] uppercase font-bold tracking-wider mb-1">
                 Submitting Claimant Identity
               </span>
               <p className="text-zinc-200 font-medium">
@@ -192,18 +192,18 @@ export function ClaimModal({
               </p>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-2">
+            <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2">
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl px-4 py-2 text-xs font-semibold text-zinc-400 hover:text-white transition"
+                className="flex items-center justify-center rounded-xl px-4 py-2.5 sm:py-2 text-xs font-semibold text-zinc-400 hover:text-white transition min-h-[44px] sm:min-h-[38px]"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2 text-xs font-semibold text-white shadow-lg hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50"
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2.5 sm:py-2 text-xs font-semibold text-white shadow-lg hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50 min-h-[44px] sm:min-h-[38px]"
               >
                 {submitting ? "Submitting Claim..." : "Submit Claim for Verification"}
                 <ArrowRight className="h-4 w-4" />

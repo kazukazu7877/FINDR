@@ -50,38 +50,38 @@ export function HowItWorksSection() {
   ];
 
   return (
-    <section id="how-it-works" className="w-full border-t border-[#231a40] bg-[#0f0b1f] py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
+    <section id="how-it-works" className="w-full border-t border-[#231a40] bg-[#0f0b1f] py-14 sm:py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center max-w-3xl mx-auto">
           <span className="rounded-full border border-violet-500/30 bg-violet-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-300">
             A Clear, Reassuring Journey
           </span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-3 sm:mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
             How FINDR Works
           </h2>
-          <p className="mt-3 text-base text-zinc-400">
+          <p className="mt-2.5 sm:mt-3 text-sm sm:text-base text-zinc-300">
             From the moment you report an item to the moment it is back in your hands,
             every step is transparent, secure, and actively supervised.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-10 sm:mt-16 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-5">
           {steps.map((s, idx) => {
             const Icon = s.icon;
             return (
               <div
                 key={s.num}
-                className="group relative flex flex-col justify-between rounded-2xl border border-zinc-800/80 bg-[#151026]/90 p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#1a1430] hover:shadow-xl hover:shadow-purple-950/50"
+                className="group relative flex flex-col justify-between rounded-2xl border border-zinc-800/80 bg-[#151026]/90 p-4 sm:p-5 shadow-lg backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-violet-500/50 hover:bg-[#1a1430] hover:shadow-xl hover:shadow-purple-950/50"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-mono text-xs font-bold text-zinc-500">{s.num}</span>
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <span className="font-mono text-xs font-bold text-zinc-400">{s.num}</span>
                     <div className={`flex h-10 w-10 items-center justify-center rounded-xl border bg-gradient-to-br ${s.color}`}>
                       <Icon className="h-5 w-5" />
                     </div>
                   </div>
                   <h3 className="text-base font-semibold text-white">{s.title}</h3>
-                  <p className="mt-2 text-xs leading-relaxed text-zinc-400">{s.desc}</p>
+                  <p className="mt-2 text-xs leading-relaxed text-zinc-300">{s.desc}</p>
                 </div>
 
                 {idx < steps.length - 1 && (

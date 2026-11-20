@@ -125,30 +125,30 @@ export function AuthModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="relative w-full max-w-md rounded-3xl border border-violet-500/30 bg-[#141026] p-6 sm:p-8 shadow-2xl shadow-purple-950/80 max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
+      <div className="relative w-full max-w-md rounded-3xl border border-violet-500/30 bg-[#141026] p-4 sm:p-6 md:p-8 shadow-2xl shadow-purple-950/80 max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-5 top-5 rounded-full p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white transition"
+          className="absolute right-4 top-4 sm:right-5 sm:top-5 rounded-full p-2 text-zinc-400 hover:bg-zinc-800 hover:text-white transition min-h-[36px] min-w-[36px] flex items-center justify-center"
           aria-label="Close"
         >
           <X className="h-5 w-5" />
         </button>
 
         {/* Header */}
-        <div className="text-center">
+        <div className="text-center pt-1">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-violet-600 to-indigo-600 text-white shadow-lg shadow-purple-900/40">
             {isStaffLogin ? <Shield className="h-6 w-6" /> : <GraduationCap className="h-6 w-6" />}
           </div>
-          <h2 className="mt-3 text-xl font-bold text-white">
+          <h2 className="mt-3 text-lg sm:text-xl font-bold text-white">
             {isStaffLogin
               ? "Staff Supervisory Access"
               : tab === "register"
               ? "Join Campus FINDR"
               : "Welcome Back"}
           </h2>
-          <p className="mt-1 text-xs text-zinc-400">
+          <p className="mt-1 text-xs text-zinc-300">
             {isStaffLogin
               ? "Log in with authorized staff or supervisor credentials."
               : tab === "register"
@@ -159,14 +159,14 @@ export function AuthModal({
 
         {/* Tab Toggle (if not in Staff Mode) */}
         {!isStaffLogin && (
-          <div className="mt-6 flex rounded-xl border border-zinc-800 bg-[#0e0a1a] p-1">
+          <div className="mt-5 sm:mt-6 flex rounded-xl border border-zinc-800 bg-[#0e0a1a] p-1">
             <button
               type="button"
               onClick={() => {
                 setTab("login");
                 setError(null);
               }}
-              className={`flex-1 rounded-lg py-2 text-xs font-semibold transition ${
+              className={`flex-1 rounded-lg py-2.5 sm:py-2 text-xs font-semibold transition min-h-[40px] sm:min-h-[36px] flex items-center justify-center ${
                 tab === "login"
                   ? "bg-violet-600 text-white shadow-sm"
                   : "text-zinc-400 hover:text-white"
@@ -180,7 +180,7 @@ export function AuthModal({
                 setTab("register");
                 setError(null);
               }}
-              className={`flex-1 rounded-lg py-2 text-xs font-semibold transition ${
+              className={`flex-1 rounded-lg py-2.5 sm:py-2 text-xs font-semibold transition min-h-[40px] sm:min-h-[36px] flex items-center justify-center ${
                 tab === "register"
                   ? "bg-violet-600 text-white shadow-sm"
                   : "text-zinc-400 hover:text-white"
@@ -200,7 +200,7 @@ export function AuthModal({
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-5 sm:mt-6 space-y-4">
           {tab === "register" && !isStaffLogin && (
             <>
               {/* Full Name */}
@@ -216,7 +216,7 @@ export function AuthModal({
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="e.g. Krishiv Chhabra"
-                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                   />
                 </div>
               </div>
@@ -234,10 +234,10 @@ export function AuthModal({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="10-digit mobile number for SMS alerts"
-                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                   />
                 </div>
-                <p className="mt-1 text-[10px] text-zinc-500">
+                <p className="mt-1 text-[10px] text-zinc-400">
                   Used for verified SMS notifications upon confirmed matches.
                 </p>
               </div>
@@ -252,7 +252,7 @@ export function AuthModal({
                   <select
                     value={academicYear}
                     onChange={(e) => setAcademicYear(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                   >
                     {ACADEMIC_YEARS.map((y) => (
                       <option key={y} value={y} className="bg-[#120d24]">
@@ -264,7 +264,7 @@ export function AuthModal({
               </div>
 
               {/* Branch & Section */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs font-medium text-zinc-300 mb-1">
                     Branch <span className="text-violet-400">*</span>
@@ -272,7 +272,7 @@ export function AuthModal({
                   <select
                     value={branch}
                     onChange={(e) => setBranch(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] px-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                   >
                     {BRANCHES.map((b) => (
                       <option key={b} value={b} className="bg-[#120d24]">
@@ -289,7 +289,7 @@ export function AuthModal({
                   <select
                     value={section}
                     onChange={(e) => setSection(e.target.value)}
-                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] px-3 py-2 text-xs text-white focus:border-violet-500 focus:outline-none"
+                    className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] px-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
                   >
                     {SECTIONS.map((s) => (
                       <option key={s} value={s} className="bg-[#120d24]">
@@ -315,7 +315,7 @@ export function AuthModal({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={isStaffLogin ? "staff@university.edu" : "student@university.edu"}
-                className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
               />
             </div>
           </div>
@@ -333,7 +333,7 @@ export function AuthModal({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none"
+                className="w-full rounded-xl border border-zinc-800 bg-[#0d091d] pl-9 pr-3 py-2.5 sm:py-2 text-sm sm:text-xs text-white placeholder-zinc-500 focus:border-violet-500 focus:outline-none min-h-[44px] sm:min-h-[38px]"
               />
             </div>
           </div>
@@ -342,7 +342,7 @@ export function AuthModal({
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 py-2.5 text-xs font-semibold text-white shadow-lg shadow-purple-950/40 hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 py-3 sm:py-2.5 text-sm sm:text-xs font-semibold text-white shadow-lg shadow-purple-950/40 hover:from-violet-500 hover:to-indigo-500 transition disabled:opacity-50 min-h-[46px] sm:min-h-[40px]"
           >
             {loading ? (
               <span>Verifying credentials...</span>
@@ -369,7 +369,7 @@ export function AuthModal({
               setIsStaffLogin(!isStaffLogin);
               setError(null);
             }}
-            className="text-[11px] text-zinc-400 hover:text-violet-300 transition"
+            className="text-xs sm:text-[11px] text-zinc-400 hover:text-violet-300 transition py-1 inline-block min-h-[36px]"
           >
             {isStaffLogin ? "← Switch back to Student Login" : "Campus Staff or Supervisor? Log in here →"}
           </button>

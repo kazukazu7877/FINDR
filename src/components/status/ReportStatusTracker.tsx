@@ -101,7 +101,7 @@ export function ReportStatusTracker({
 
   return (
     <div
-      className={`rounded-2xl border border-violet-500/30 bg-[#15102a]/95 p-5 sm:p-6 shadow-xl shadow-purple-950/40 backdrop-blur-md transition-all duration-300 ${className}`}
+      className={`rounded-2xl border border-violet-500/30 bg-[#15102a]/95 p-4 sm:p-6 shadow-xl shadow-purple-950/40 backdrop-blur-md transition-all duration-300 ${className}`}
     >
       {/* Top Header Row */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 pb-4">
@@ -135,7 +135,7 @@ export function ReportStatusTracker({
       </div>
 
       {/* Interactive Tabs */}
-      <div className="mt-4 flex items-center gap-1.5 border-b border-zinc-800/80 pb-2">
+      <div className="mt-4 flex items-center gap-1.5 border-b border-zinc-800/80 pb-2 overflow-x-auto no-scrollbar flex-nowrap">
         <button
           onClick={() => setActiveTab("progress")}
           className={`rounded-xl px-3.5 py-1.5 text-xs font-semibold transition ${
@@ -184,7 +184,7 @@ export function ReportStatusTracker({
                 return (
                   <div key={m.num} className="flex flex-col items-center text-center">
                     <div
-                      className={`relative flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
+                      className={`relative flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-[11px] sm:text-xs font-bold transition-all duration-300 ${
                         isCurrent
                           ? "bg-violet-600 text-white ring-4 ring-violet-500/30 shadow-lg shadow-violet-900/60 scale-110"
                           : m.done
@@ -193,7 +193,7 @@ export function ReportStatusTracker({
                       }`}
                     >
                       {m.done && !isCurrent ? (
-                        <Check className="h-4 w-4" />
+                        <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                       ) : (
                         <span>{m.num}</span>
                       )}
@@ -202,12 +202,12 @@ export function ReportStatusTracker({
                       )}
                     </div>
                     <span
-                      className={`mt-2 text-[11px] font-semibold transition ${
+                      className={`mt-1.5 sm:mt-2 text-[10px] sm:text-[11px] font-semibold transition ${
                         isCurrent
                           ? "text-violet-300 font-bold"
                           : m.done
                           ? "text-zinc-200"
-                          : "text-zinc-600"
+                          : "text-zinc-500"
                       }`}
                     >
                       {m.label}

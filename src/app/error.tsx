@@ -38,14 +38,14 @@ export default function ErrorBoundary({
         <div className="mt-6 flex flex-col sm:flex-row gap-3">
           <button
             onClick={() => reset()}
-            className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-violet-500 shadow-lg shadow-violet-900/30"
+            className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-violet-500 shadow-lg shadow-violet-900/30 min-h-[44px] sm:min-h-[38px]"
           >
             <RefreshCw className="h-4 w-4" />
             Try Again
           </button>
           <button
             onClick={handleResetSession}
-            className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-800/40 px-4 py-2.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white"
+            className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-800/40 px-4 py-2.5 text-xs font-semibold text-zinc-300 transition hover:bg-zinc-800 hover:text-white min-h-[44px] sm:min-h-[38px]"
           >
             <LogOut className="h-4 w-4" />
             Reset Session

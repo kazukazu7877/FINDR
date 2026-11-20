@@ -34,21 +34,21 @@ export function FaqSection() {
   ];
 
   return (
-    <section id="faqs" className="w-full border-t border-[#231a40] bg-[#0f0b1f] py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
+    <section id="faqs" className="w-full border-t border-[#231a40] bg-[#0f0b1f] py-14 sm:py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
       <div className="mx-auto max-w-4xl">
         <div className="text-center">
           <span className="rounded-full border border-violet-500/30 bg-violet-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-300">
             Common Questions
           </span>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-3 sm:mt-4 text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
             Frequently Asked Questions
           </h2>
-          <p className="mt-3 text-sm text-zinc-400">
+          <p className="mt-2.5 sm:mt-3 text-sm sm:text-base text-zinc-300">
             Everything you need to know about campus privacy, AI matching, and safe recovery.
           </p>
         </div>
 
-        <div className="mt-12 space-y-3">
+        <div className="mt-8 sm:mt-12 space-y-3">
           {faqs.map((f, i) => {
             const isOpen = openIndex === i;
             return (
@@ -58,9 +58,9 @@ export function FaqSection() {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between p-5 text-left focus:outline-none"
+                  className="flex w-full items-center justify-between p-4 sm:p-5 text-left focus:outline-none min-h-[48px]"
                 >
-                  <span className="text-sm font-semibold text-white pr-4">{f.q}</span>
+                  <span className="text-sm sm:text-base font-semibold text-white pr-4">{f.q}</span>
                   <ChevronDown
                     className={`h-4 w-4 shrink-0 text-violet-400 transition-transform duration-200 ${
                       isOpen ? "rotate-180" : ""
@@ -68,7 +68,7 @@ export function FaqSection() {
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs leading-relaxed text-zinc-300 border-t border-zinc-800/60 bg-[#120e22]">
+                  <div className="px-4 sm:px-5 pb-4 sm:pb-5 pt-2 text-xs sm:text-sm leading-relaxed text-zinc-300 border-t border-zinc-800/60 bg-[#120e22]">
                     {f.a}
                   </div>
                 )}

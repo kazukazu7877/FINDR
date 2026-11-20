@@ -42,7 +42,7 @@ const CAMPUS_ITEMS: TelemetryItem[] = [
     location: "CS Block 3rd Floor",
     status: "AI Candidate Match",
     statusColor: "text-violet-300 bg-violet-950/60 border-violet-500/40",
-    x: "left-4 top-6 sm:left-6 sm:top-8",
+    x: "left-2 top-3 sm:left-6 sm:top-8",
     delay: "animate-float-slow",
   },
   {
@@ -52,7 +52,7 @@ const CAMPUS_ITEMS: TelemetryItem[] = [
     location: "Central Library",
     status: "Staff Verified",
     statusColor: "text-amber-300 bg-amber-950/60 border-amber-500/40",
-    x: "right-4 top-10 sm:right-6 sm:top-12",
+    x: "right-2 top-5 sm:right-6 sm:top-12",
     delay: "animate-float-delayed",
   },
   {
@@ -62,7 +62,7 @@ const CAMPUS_ITEMS: TelemetryItem[] = [
     location: "Hostel Block B",
     status: "Reunited Safely",
     statusColor: "text-emerald-300 bg-emerald-950/60 border-emerald-500/40",
-    x: "left-6 bottom-10 sm:left-10 sm:bottom-12",
+    x: "left-2 bottom-5 sm:left-10 sm:bottom-12",
     delay: "animate-float-delayed",
   },
   {
@@ -72,7 +72,7 @@ const CAMPUS_ITEMS: TelemetryItem[] = [
     location: "Cafeteria Quad",
     status: "Verified Handover",
     statusColor: "text-emerald-300 bg-emerald-950/60 border-emerald-500/40",
-    x: "right-6 bottom-8 sm:right-8 sm:bottom-10",
+    x: "right-2 bottom-3 sm:right-8 sm:bottom-10",
     delay: "animate-float-slow",
   },
 ];
@@ -136,7 +136,7 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
             </div>
 
             {/* Main Headline */}
-            <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.2rem] lg:leading-[1.08]">
+            <h1 className="mt-5 sm:mt-6 text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] font-extrabold tracking-tight text-white leading-tight lg:leading-[1.08]">
               Lost something on campus? <br />
               <span className="bg-gradient-to-r from-violet-300 via-purple-300 to-indigo-200 bg-clip-text text-transparent">
                 Let&apos;s help you find it.
@@ -144,17 +144,17 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
             </h1>
 
             {/* Supporting Prose */}
-            <p className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg">
+            <p className="mt-4 sm:mt-6 max-w-2xl text-sm sm:text-base leading-relaxed text-zinc-200 sm:text-lg">
               FINDR connects lost and found belongings across campus using intelligent multimodal
               AI matching and human supervisory verification — bringing recovery into one seamless platform.
             </p>
 
             {/* Interactive Live Telemetry Ticker */}
-            <div className="mt-6 flex items-center gap-3 rounded-2xl border border-violet-500/20 bg-[#16102c]/60 px-4 py-2.5 max-w-xl backdrop-blur-md">
+            <div className="mt-5 sm:mt-6 flex items-center gap-2.5 sm:gap-3 rounded-2xl border border-violet-500/20 bg-[#16102c]/60 px-3.5 sm:px-4 py-2 sm:py-2.5 max-w-xl backdrop-blur-md">
               <Radio className="h-4 w-4 text-violet-400 animate-pulse shrink-0" />
               <div className="overflow-hidden">
-                <p className="text-xs text-zinc-300 truncate transition-all duration-500">
-                  <span className="text-violet-400 font-semibold uppercase tracking-wider text-[10px] mr-1.5">
+                <p className="text-xs sm:text-xs text-zinc-200 truncate transition-all duration-500">
+                  <span className="text-violet-400 font-semibold uppercase tracking-wider text-[10px] sm:text-[11px] mr-1.5">
                     Live Feed:
                   </span>
                   {TELEMETRY_FEED[feedIndex]}
@@ -163,10 +163,10 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
             </div>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10">
+            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <button
                 onClick={onGetStarted}
-                className="group relative flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-8 py-4 text-sm font-bold text-white shadow-xl shadow-purple-950/60 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] hover:shadow-violet-600/30 focus:outline-none focus:ring-2 focus:ring-violet-400"
+                className="group relative flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 px-8 py-3.5 sm:py-4 text-sm font-bold text-white shadow-xl shadow-purple-950/60 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] hover:shadow-violet-600/30 focus:outline-none focus:ring-2 focus:ring-violet-400 min-h-[48px]"
               >
                 <span>Get Started</span>
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -178,41 +178,41 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
                   e.preventDefault();
                   onExplore();
                 }}
-                className="rounded-2xl border border-violet-500/30 bg-violet-950/30 px-7 py-4 text-sm font-semibold text-violet-200 transition-all duration-200 hover:border-violet-400/60 hover:bg-violet-900/40 hover:text-white focus:outline-none"
+                className="flex items-center justify-center rounded-2xl border border-violet-500/30 bg-violet-950/30 px-7 py-3.5 sm:py-4 text-sm font-semibold text-violet-200 transition-all duration-200 hover:border-violet-400/60 hover:bg-violet-900/40 hover:text-white focus:outline-none min-h-[48px]"
               >
                 How It Works
               </a>
             </div>
 
             {/* 3 Core Trust Guarantees */}
-            <div className="mt-12 grid grid-cols-1 gap-4 border-t border-zinc-800/80 pt-8 sm:grid-cols-3">
-              <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-[#140e26]/40 p-3 transition hover:border-violet-500/30">
+            <div className="mt-8 sm:mt-12 grid grid-cols-1 gap-3 sm:gap-4 border-t border-zinc-800/80 pt-6 sm:pt-8 sm:grid-cols-3">
+              <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-[#140e26]/40 p-3 sm:p-3.5 transition hover:border-violet-500/30">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-950/80 border border-violet-700/40 text-violet-400 shadow">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold text-white">Private & Secure</h4>
-                  <p className="text-[11px] text-zinc-400">Zero public contact leakage</p>
+                  <h4 className="text-xs sm:text-xs font-semibold text-white">Private & Secure</h4>
+                  <p className="text-[11px] sm:text-xs text-zinc-300">Zero public contact leakage</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-[#140e26]/40 p-3 transition hover:border-violet-500/30">
+              <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-[#140e26]/40 p-3 sm:p-3.5 transition hover:border-violet-500/30">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-950/80 border border-violet-700/40 text-violet-400 shadow">
                   <Cpu className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold text-white">65–25–10 AI Engine</h4>
-                  <p className="text-[11px] text-zinc-400">Multimodal vision + context</p>
+                  <h4 className="text-xs sm:text-xs font-semibold text-white">65–25–10 AI Engine</h4>
+                  <p className="text-[11px] sm:text-xs text-zinc-300">Multimodal vision + context</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-[#140e26]/40 p-3 transition hover:border-violet-500/30">
+              <div className="flex items-center gap-3 rounded-xl border border-zinc-800/60 bg-[#140e26]/40 p-3 sm:p-3.5 transition hover:border-violet-500/30">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-950/80 border border-violet-700/40 text-violet-400 shadow">
                   <CheckCircle2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold text-white">Staff Supervised</h4>
-                  <p className="text-[11px] text-zinc-400">Verified campus handovers</p>
+                  <h4 className="text-xs sm:text-xs font-semibold text-white">Staff Supervised</h4>
+                  <p className="text-[11px] sm:text-xs text-zinc-300">Verified campus handovers</p>
                 </div>
               </div>
             </div>
@@ -220,7 +220,7 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
 
           {/* ── Right Column: Interactive Campus Belonging Convergence Visual ── */}
           <div className="lg:col-span-5">
-            <div className="relative mx-auto flex h-[460px] w-full max-w-[480px] items-center justify-center rounded-3xl border border-violet-500/30 bg-gradient-to-b from-[#191136]/90 via-[#130d2a]/95 to-[#0e0920] p-6 shadow-2xl shadow-purple-950/70 backdrop-blur-2xl overflow-hidden">
+            <div className="relative mx-auto flex h-[410px] sm:h-[460px] w-full max-w-[480px] items-center justify-center rounded-3xl border border-violet-500/30 bg-gradient-to-b from-[#191136]/90 via-[#130d2a]/95 to-[#0e0920] p-4 sm:p-6 shadow-2xl shadow-purple-950/70 backdrop-blur-2xl overflow-hidden">
               {/* Radar Discovery Scanning Grid & Concentric Waves */}
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                 {/* Slow Rotating Scanning Grid Ring */}
@@ -239,15 +239,15 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
               </svg>
 
               {/* Central Hub Node: FINDR Multimodal Core */}
-              <div className="relative z-10 flex flex-col items-center justify-center rounded-2xl border border-violet-400/50 bg-gradient-to-tr from-violet-700 via-purple-600 to-indigo-600 p-5 text-center shadow-2xl shadow-purple-950/80 transition-transform duration-300 hover:scale-105 cursor-pointer">
-                <div className="relative flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur shadow-inner">
-                  <Sparkles className="h-7 w-7 text-white animate-pulse" />
+              <div className="relative z-10 flex flex-col items-center justify-center rounded-2xl border border-violet-400/50 bg-gradient-to-tr from-violet-700 via-purple-600 to-indigo-600 p-4 sm:p-5 text-center shadow-2xl shadow-purple-950/80 transition-transform duration-300 hover:scale-105 cursor-pointer">
+                <div className="relative flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur shadow-inner">
+                  <Sparkles className="h-6 w-6 sm:h-7 sm:w-7 text-white animate-pulse" />
                   <span className="absolute -top-1 -right-1 flex h-3 w-3">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-400" />
                   </span>
                 </div>
-                <span className="mt-2.5 text-xs font-extrabold uppercase tracking-widest text-white">
+                <span className="mt-2 sm:mt-2.5 text-xs font-extrabold uppercase tracking-widest text-white">
                   FINDR AI CORE
                 </span>
                 <span className="text-[10px] text-violet-200 mt-0.5">
@@ -264,22 +264,22 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
                     key={item.id}
                     onMouseEnter={() => setActiveItem(item.id)}
                     onMouseLeave={() => setActiveItem(null)}
-                    className={`absolute ${item.x} ${item.delay} z-20 flex items-center gap-2.5 rounded-2xl border border-zinc-700/70 bg-[#1d163a]/90 p-3 shadow-xl shadow-black/50 backdrop-blur-md transition-all duration-300 cursor-pointer ${
+                    className={`absolute ${item.x} ${item.delay} z-20 flex items-center gap-2 sm:gap-2.5 rounded-2xl border border-zinc-700/70 bg-[#1d163a]/90 p-2 sm:p-3 shadow-xl shadow-black/50 backdrop-blur-md transition-all duration-300 cursor-pointer ${
                       isHovered
-                        ? "scale-110 border-violet-400/80 shadow-violet-900/60"
+                        ? "scale-105 sm:scale-110 border-violet-400/80 shadow-violet-900/60"
                         : "hover:scale-105 hover:border-violet-500/50"
                     }`}
                   >
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-900/50 border border-violet-700/40 text-violet-300">
-                      <IconComponent className="h-4 w-4" />
+                    <div className="flex h-8 w-8 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-xl bg-violet-900/50 border border-violet-700/40 text-violet-300">
+                      <IconComponent className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </div>
                     <div className="text-left">
-                      <p className="text-xs font-bold text-white leading-tight">{item.name}</p>
-                      <p className="text-[10px] text-zinc-400 flex items-center gap-1 mt-0.5">
+                      <p className="text-[11px] sm:text-xs font-bold text-white leading-tight">{item.name}</p>
+                      <p className="text-[9px] sm:text-[10px] text-zinc-300 flex items-center gap-1 mt-0.5">
                         <MapPin className="h-2.5 w-2.5 text-violet-400" />
                         {item.location}
                       </p>
-                      <span className={`mt-1 inline-block rounded px-1.5 py-0.2 text-[9px] font-semibold border ${item.statusColor}`}>
+                      <span className={`mt-0.5 sm:mt-1 inline-block rounded px-1.5 py-0.2 text-[8px] sm:text-[9px] font-semibold border ${item.statusColor}`}>
                         {item.status}
                       </span>
                     </div>
