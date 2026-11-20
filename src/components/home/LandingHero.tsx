@@ -97,7 +97,7 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-[92svh] w-full overflow-hidden bg-gradient-to-b from-[#0a0715] via-[#120d26] to-[#0a0715] px-4 py-12 sm:px-6 md:py-20 lg:px-8">
+    <section id="home" className="relative min-h-[92svh] w-full overflow-hidden bg-gradient-to-b from-[#0a0715] via-[#120d26] to-[#0a0715] px-4 py-12 sm:px-6 md:py-20 lg:px-8 scroll-mt-20">
       {/* ── Ambient Radial Lighting Orbs ── */}
       <div
         aria-hidden="true"
@@ -172,12 +172,16 @@ export function LandingHero({ onGetStarted, onExplore }: LandingHeroProps) {
                 <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </button>
 
-              <button
-                onClick={onExplore}
+              <a
+                href="#how-it-works"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onExplore();
+                }}
                 className="rounded-2xl border border-violet-500/30 bg-violet-950/30 px-7 py-4 text-sm font-semibold text-violet-200 transition-all duration-200 hover:border-violet-400/60 hover:bg-violet-900/40 hover:text-white focus:outline-none"
               >
                 How It Works
-              </button>
+              </a>
             </div>
 
             {/* 3 Core Trust Guarantees */}

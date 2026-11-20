@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Bell,
   User,
@@ -15,6 +15,7 @@ import {
   AlertCircle,
   Menu,
   X,
+  ArrowRight,
 } from "lucide-react";
 import { UserProfile, Notification } from "@/types/database";
 
@@ -48,11 +49,76 @@ export function Navbar({
   const [profileOpen, setProfileOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("home");
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
   const isStaffOrSupervisor = currentUser?.role === "staff" || currentUser?.role === "supervisor";
   const displayName = currentUser?.full_name || currentUser?.name || currentUser?.email?.split("@")[0] || "User";
   const displayInitial = (displayName.charAt(0) || "U").toUpperCase();
+
+  // IntersectionObserver to highlight navigation link based on visible section
+  useEffect(() => {
+    const sectionIds = ["home", "how-it-works", "why-findr", "faqs"];
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+        if (visibleEntries.length > 0) {
+          const mostVisible = visibleEntries.reduce((prev, curr) =>
+            curr.intersectionRatio > prev.intersectionRatio ? curr : prev
+          );
+          setActiveSection(mostVisible.target.id);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-15% 0px -40% 0px",
+        threshold: [0.1, 0.3, 0.6],
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+
+    // Handle existing URL hash on load/refresh
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash.replace("#", "");
+      if (sectionIds.includes(hash)) {
+        setActiveSection(hash);
+      }
+    }
+
+    return () => observer.disconnect();
+  }, [activeTab]);
+
+  const handleSmoothNav = (sectionId: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
+    setMobileMenuOpen(false);
+
+    if (activeTab !== "home" && onNavigateTab) {
+      onNavigateTab("home");
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+          window.history.pushState(null, "", `#${sectionId}`);
+        }
+      }, 60);
+    } else {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", `#${sectionId}`);
+      }
+    }
+    setActiveSection(sectionId);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-[#2d244a] bg-[#0d0a1a]/90 backdrop-blur-md">
@@ -60,7 +126,7 @@ export function Navbar({
         {/* Brand / Logo */}
         <div className="flex items-center gap-6">
           <button
-            onClick={() => onNavigateTab("home")}
+            onClick={(e) => handleSmoothNav("home", e)}
             className="flex items-center gap-2.5 text-left transition hover:opacity-90 focus:outline-none"
           >
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 shadow-lg shadow-purple-900/30">
@@ -90,7 +156,7 @@ export function Navbar({
 
         {/* Center Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1">
-          {currentUser ? (
+          {currentUser && activeTab !== "home" ? (
             mode === "user" ? (
               <>
                 <button
@@ -180,30 +246,59 @@ export function Navbar({
             )
           ) : (
             <>
-              <button
-                onClick={() => onNavigateTab("home")}
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+              <a
+                href="#home"
+                onClick={(e) => handleSmoothNav("home", e)}
+                className={`rounded-lg px-3 py-1.5 text-sm transition ${
+                  activeSection === "home"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold shadow-sm"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 Home
-              </button>
+              </a>
               <a
                 href="#how-it-works"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+                onClick={(e) => handleSmoothNav("how-it-works", e)}
+                className={`rounded-lg px-3 py-1.5 text-sm transition ${
+                  activeSection === "how-it-works"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold shadow-sm"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 How It Works
               </a>
               <a
                 href="#why-findr"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+                onClick={(e) => handleSmoothNav("why-findr", e)}
+                className={`rounded-lg px-3 py-1.5 text-sm transition ${
+                  activeSection === "why-findr"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold shadow-sm"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 Why FINDR
               </a>
               <a
                 href="#faqs"
-                className="rounded-lg px-3 py-1.5 text-sm font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+                onClick={(e) => handleSmoothNav("faqs", e)}
+                className={`rounded-lg px-3 py-1.5 text-sm transition ${
+                  activeSection === "faqs"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold shadow-sm"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 FAQs
               </a>
+              {currentUser && (
+                <button
+                  onClick={() => onNavigateTab(mode === "staff" ? "staff-dashboard" : "dashboard")}
+                  className="rounded-lg px-3 py-1.5 text-sm font-medium text-violet-300 hover:bg-violet-950/40 hover:text-white transition flex items-center gap-1 ml-1"
+                >
+                  <ArrowRight className="h-3.5 w-3.5" />
+                  <span>Workspace</span>
+                </button>
+              )}
             </>
           )}
         </nav>
@@ -394,7 +489,7 @@ export function Navbar({
       {/* Mobile Navigation Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-zinc-800 bg-[#120d24]/95 backdrop-blur-md px-4 py-3 space-y-1 animate-fade-in-up shadow-2xl">
-          {currentUser ? (
+          {currentUser && activeTab !== "home" ? (
             mode === "user" ? (
               <>
                 <button
@@ -505,36 +600,62 @@ export function Navbar({
             )
           ) : (
             <>
-              <button
-                onClick={() => {
-                  onNavigateTab("home");
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+              <a
+                href="#home"
+                onClick={(e) => handleSmoothNav("home", e)}
+                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                  activeSection === "home"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 Home
-              </button>
+              </a>
               <a
                 href="#how-it-works"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+                onClick={(e) => handleSmoothNav("how-it-works", e)}
+                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                  activeSection === "how-it-works"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 How It Works
               </a>
               <a
                 href="#why-findr"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+                onClick={(e) => handleSmoothNav("why-findr", e)}
+                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                  activeSection === "why-findr"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 Why FINDR
               </a>
               <a
                 href="#faqs"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-800/40 hover:text-white transition"
+                onClick={(e) => handleSmoothNav("faqs", e)}
+                className={`block w-full text-left rounded-xl px-3.5 py-2.5 text-xs transition ${
+                  activeSection === "faqs"
+                    ? "bg-violet-600/30 text-violet-200 border border-violet-500/30 font-semibold"
+                    : "text-zinc-300 hover:bg-zinc-800/40 hover:text-white font-medium"
+                }`}
               >
                 FAQs
               </a>
+              {currentUser && (
+                <button
+                  onClick={() => {
+                    onNavigateTab(mode === "staff" ? "staff-dashboard" : "dashboard");
+                    setMobileMenuOpen(false);
+                  }}
+                  className="w-full text-left rounded-xl px-3.5 py-2.5 text-xs font-medium text-violet-300 hover:bg-violet-950/40 hover:text-white transition flex items-center justify-between"
+                >
+                  <span>Go to Workspace</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </button>
+              )}
             </>
           )}
         </div>

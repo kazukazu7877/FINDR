@@ -45,7 +45,7 @@ export function WhyFindrSection() {
   ];
 
   return (
-    <section id="why-findr" className="w-full border-t border-[#231a40] bg-[#0d0a1a] py-20 px-4 sm:px-6 lg:px-8">
+    <section id="why-findr" className="w-full border-t border-[#231a40] bg-[#0d0a1a] py-20 px-4 sm:px-6 lg:px-8 scroll-mt-20">
       <div className="mx-auto max-w-7xl">
         <div className="text-center max-w-3xl mx-auto">
           <span className="rounded-full border border-violet-500/30 bg-violet-950/40 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-violet-300">

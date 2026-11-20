@@ -455,7 +455,10 @@ export default function FindrApp() {
               }}
               onExplore={() => {
                 const el = document.getElementById("how-it-works");
-                el?.scrollIntoView({ behavior: "smooth" });
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                  window.history.pushState(null, "", "#how-it-works");
+                }
               }}
             />
             <HowItWorksSection />
